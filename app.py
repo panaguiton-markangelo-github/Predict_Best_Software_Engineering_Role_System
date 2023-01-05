@@ -8722,7 +8722,7 @@ def register():
         d1 = datetime.datetime.now()
         AY = ""
         
-        hash_password = sha256_crypt.encrypt(password)
+        hash_password = sha256_crypt.hash(password)
 
         if d1.month >= 7 and d1.month <= 12:
             AY = str(d1.year) + "-" + str(d1.year + 1) 

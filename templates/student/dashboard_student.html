@@ -72,6 +72,43 @@
                         {% else %}
                         <p>Main Role: not yet predicted.</p>
                         {% endif %}
+
+                        <br>
+
+
+                        {% if main_role == 'Project Manager' %}
+                          <p class="text-center" >Software project managers provide the consistency needed to see software projects through from start to finish. With a mixture of technical knowledge and leadership, they oversee both the product being produced and the people performing the work. Software project managers generally work full time in an office environment, though performing extra hours is commonplace when problems need resolution or deadlines near. After years of experience, software project managers may move on to positions such as senior product manager or software engineering manager.
+                            
+                          </p>
+                        {% endif %}
+
+                        {% if main_role == 'Lead Programmer' %}
+                        <p class="text-center" >Lead programmers are responsible for managing and overseeing the work of other programmers. They commonly act as a liaison between developers and management, ensuring that everyone is on the same page with regard to project goals and objectives.
+                          Lead programmers may also be responsible for planning out projects in advance, breaking them down into smaller tasks that individual developers can tackle. This helps ensure that all parties involved have a clear idea of what needs to be done and when it needs to be done by.
+                          
+                        </p>
+                        {% endif %}
+                        
+                        {% if main_role == 'UI/UX Designer' %}
+                          <p class="text-center">
+                            UI/UX designers create the user interface for an app, website, or other interactive media. Their work includes collaborating with product managers and engineers to gather requirements from users before designing ideas that can be communicated using storyboards. They also process flows or sitemaps. They'll then use their creativity while applying color palettes based on what best fits into a particular design conceptually.
+                            
+                          </p>
+                        {% endif %}
+
+                        {% if main_role == 'Quality Assurance Engineer' %}
+                        <p class="text-center">
+                          The primary responsibility of the QA Engineer is to prevent defects. In addition, they are responsible for identifying and eliminating any mistakes in code before its release to customers. Such errors could result from various issues such as insufficient data input or an improperly designed interface element.
+                          
+                        </p>
+                        {% endif %}
+
+                        {% if main_role == 'Business Analyst' %}
+                        <p class="text-center">
+                          A business analyst is a member of a product development team who analyzes the business domain, documents its processes and systems, outlines business requirements, and matches a software business model with the software being built.
+                          
+                        </p>
+                        {% endif %}
                         
                     </div>
                     <div>
@@ -88,6 +125,42 @@
                         {% else %}
                         <p>Secondary Role: not yet predicted.</p>
                         {% endif %}
+
+                        <br>
+
+                        {% if second_role == 'Project Manager' %}
+                          <p class="text-center" >Software project managers provide the consistency needed to see software projects through from start to finish. With a mixture of technical knowledge and leadership, they oversee both the product being produced and the people performing the work. Software project managers generally work full time in an office environment, though performing extra hours is commonplace when problems need resolution or deadlines near. After years of experience, software project managers may move on to positions such as senior product manager or software engineering manager.
+                            
+                          </p>
+                        {% endif %}
+
+                        {% if second_role == 'Lead Programmer' %}
+                        <p class="text-center" >Lead programmers are responsible for managing and overseeing the work of other programmers. They commonly act as a liaison between developers and management, ensuring that everyone is on the same page with regard to project goals and objectives.
+                          Lead programmers may also be responsible for planning out projects in advance, breaking them down into smaller tasks that individual developers can tackle. This helps ensure that all parties involved have a clear idea of what needs to be done and when it needs to be done by.
+                          
+                        </p>
+                        {% endif %}
+                        
+                        {% if second_role == 'UI/UX Designer' %}
+                          <p class="text-center">
+                            UI/UX designers create the user interface for an app, website, or other interactive media. Their work includes collaborating with product managers and engineers to gather requirements from users before designing ideas that can be communicated using storyboards. They also process flows or sitemaps. They'll then use their creativity while applying color palettes based on what best fits into a particular design conceptually.
+                            
+                          </p>
+                        {% endif %}
+
+                        {% if second_role == 'Quality Assurance Engineer' %}
+                        <p class="text-center">
+                          The primary responsibility of the QA Engineer is to prevent defects. In addition, they are responsible for identifying and eliminating any mistakes in code before its release to customers. Such errors could result from various issues such as insufficient data input or an improperly designed interface element.
+                          
+                        </p>
+                        {% endif %}
+
+                        {% if second_role == 'Business Analyst' %}
+                        <p class="text-center">
+                          A business analyst is a member of a product development team who analyzes the business domain, documents its processes and systems, outlines business requirements, and matches a software business model with the software being built.
+                          
+                        </p>
+                        {% endif %}
                     </div>
                     <div>
                         <span style="color: white;" class="las la-user-plus"></span>
@@ -102,13 +175,13 @@
                             
                             {% if has_record is defined and has_record %}
                                 <h3>Repredict  main and secondary roles</h3>
-                                <a href="{{ url_for('repredict') }}">Click me!<span class="las la-arrow-right"></span></a>
+                                <a href="{{ url_for('repredict') }}">Start Prediction<span class="las la-arrow-right"></span></a>
                             {% elif session['has_record'] is defined and session['has_record'] %}
                                 <h3>Repredict  main and secondary roles</h3>
-                                <a href="{{ url_for('repredict') }}">Click me!<span class="las la-arrow-right"></span></a>
+                                <a href="{{ url_for('repredict') }}">Start Prediction<span class="las la-arrow-right"></span></a>
                             {% else %}
                                 <h3>Predict main and secondary roles</h3>
-                                <a href="{{ url_for('start') }}">Click me!<span class="las la-arrow-right"></span></a>
+                                <a href="{{ url_for('start') }}">Start Prediction<span class="las la-arrow-right"></span></a>
                             {% endif %}
                         </div>
 
@@ -122,7 +195,7 @@
                                        
                                 <h4>Process:</h4>
                                 <ul>
-                                    <li>To start, click on the "Click Me" button above.</li>
+                                    <li>To start, click on the "Start Prediction" button above.</li>
                                     <li>The system will then request the student to input their grades in respective major courses.It will then output the GPA of the student.</li>
                                     <li>The system will now ask the students to take the MBTI personality type test.</li>
                                     <li>The system will now ask the students to take the multiple intelligence test.</li>
