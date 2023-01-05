@@ -1,0 +1,24 @@
+#preloader{
+    background:#000 url(../img/loading_final.gif) no-repeat center center;
+    background-size: 35%;
+    height:100vh;
+    width:100%;
+    position:fixed;
+    z-index: 200;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+  }
+
+  @media only screen and (max-width: 960px) {
+    #preloader {
+      background-size: 60%;
+    }
+  }
+
+  @media only screen and (max-width: 560px) {
+    #preloader {
+      background-size: 75%;
+    }
+  }

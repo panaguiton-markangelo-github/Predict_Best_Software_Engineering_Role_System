@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
+footer {
+    margin-top:auto;
+    padding:3rem;
+    background:#8e0413;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+footer a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.status.avail {
+    color: green;
+}
+
+.status.term{
+    color: red;
+}
+
+.status.pending{
+    color: orange;
+}

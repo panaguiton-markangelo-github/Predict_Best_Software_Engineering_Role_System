@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard_stud.css') }}">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loading.css') }}">
+    <title>Home</title>
+
+</head>
+<body>
+    <div id="preloader">
+	</div>
+    <input type="checkbox" id="nav-toggle">
+
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2><span class="las la-user-tie"></span> <span>STUDENT</span></h2>
+        </div>
+        <div class="sidebar-menu">
+        <ul>    
+                <li>
+                    <a href="{{ url_for('dashboard_student') }}"><span class="las la-home"></span>
+                    <span>Home</span></a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('view_profile') }}"><span class="las la-user-tie"></span>
+                    <span>User Profile</span></a>
+                </li>
+
+                <li>
+                    <a class="active"><span class="las la-info-circle"></span>
+                    <span>About</span></a>
+                </li>
+              
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>
+                <label for="nav-toggle">
+                    <span class="las la-bars"></span>
+                </label>
+                About
+            </h2>
+            <button style="border: none;background-color: #fff;" type="button"  data-bs-toggle="modal" data-bs-target="#logoutModal">
+                <span class="las la-sign-out-alt"></span> <span>Logout</span>
+            </button>
+        </header>
+
+
+        <main>
+            <div class="tem-grid" id="about">
+                <div class="PT_info">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Personality Types</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive-cus">
+                                <h4>History</h4>
+                                <p>
+                                    Having been studied since 1917, MBTI can be considered the most popular method of personality examination today. MBTI stands for Myers-Briggs Type Indicator – a method of personality identification through a series of multiple-choice questions of 16 personality groups. This method of personality indicator is derived from the taxonomy theories in the book Psychological Types of Swiss psychiatrist Carl Gustav Jung, published in 1921 and developed by Katharine Cook Briggs and her daughter, Isabel Briggs Myers, from around World War II. Psychological questions initially evolved into the Myers-Briggs Type Indicator and published in 1962.
+                                    <br>
+                                    <br>
+                                    The MBTI personality test is based on each person’s responses to infer their unique personalities. MBTI answers the question of why everyone in the world has a different character and no one is the person. Today, MBTI is gaining popularity and used as a fairly accurate personality classification method, helping people understand themselves and those around them or pursue suitable careers.
+                                    <br>
+                                    <br>
+                                    Based on result of the MBTI test, examinee will know which of the following 16 MBTI personality groups they belong to:
+
+                                    <br>
+                                    <p>Information retrieved from: https://www.xpersonalitytest.com/</p>
+
+                                </p>
+                                       
+                                
+                                <div class="text-center">
+                                    <h5>ENFJ: "The Giver / The Teacher"</h5>
+                                    <p> People with ENFJ personality characteristics are very aware of their environment. ENFJ personalities are friendly and polite, and they enjoy helping others, and working toward a shared goal. ENFJs are natural leaders, which explains why so many well-known politicians, coaches, and educators are ENFJs. <br><br><b style="text-decoration:underline;"> ENFJ stands for Extraversion, iNtuition, Feeling, and Judgment </b>  and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ENFJ The Giver / The Teacher because this group tends to help others, and ENFJs are one of the four oriented-idealist personality types. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>ENFP: "The Champion / The Campaigner"</h5>
+                                    <p> ENFPs are people-centered creators who are energized by new ideas, people, and activities. ENFP personality types are known to be active, flexible, and innovative in their conduct. These MBTI types have a strong need for meaningful, emotional relationships with others. <br><br><b style="text-decoration:underline;"> ENFP stands for Extraversion, iNtuition, Feeling, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ENFP The Champion / The Campaigner because this group tends to help others, and ENFPs are one of the four oriented-idealist personality types. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>ENTJ: "The Field Marshal / The Commander"</h5>
+                                    <p> People of the ENTJ personality type are charming, straightforward, and rational in their actions. ENTJs are aggressive and love being in control; they perceive themselves as leaders and managers, managing people and procedures to attain their objectives. <br><br><b style="text-decoration:underline;"> ENTJ stands for Extraversion, iNtuition, Thinking, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ENTJ The Field Marshal / The Commander because their innate ability is to command and lead people. ENTJ is one of four personality types of The Rational. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>ENTP: "The Visionary/ The Debater"</h5> 
+                                    <p> The ENTP personality type is talkative, curious, and impulsive in their behavior. ENTPs are inspired by innovators who are compelled to provide novel solutions to cognitively challenging problems. These MBTI personalities are open-minded and unconventional, and they strive to investigate, comprehend, and influence others. <br><br><b style="text-decoration:underline;"> ENTP stands for Extraversion, iNtuition, Thinking, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ENTP The Visionary/ The Debater because they are very passionate about coming up with new ideas. ENTP is one of four personality types of The Rational. </b></p>
+
+                                </div>
+
+                               
+                                <div class="text-center">
+                                    <h5>ESFJ: "The Provider/ The Consul"</h5> 
+                                    <p>The ESFJ MBTI type is recognized for being empathetic, warm-hearted, and sympathetic. They are very aware of their emotional environment and are sensitive to both others' feelings and others' opinions of them. <br><br><b style="text-decoration:underline;"> ESFJ stands for Extraversion, Sensing, Feeling, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ESFJ The Provider/ The Consul because they are very interested in caring, protecting, and helping others in very practical ways, and ESFJ is one of the four personality types of The Guardian. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>ESFP: "The Performer/ The Entertainer"</h5> 
+                                    <p>People with the ESFP MBTI type act in a friendly and supportive manner. They frequently follow the flow of events. They like gatherings and are often the focus of attention. <br><br><b style="text-decoration:underline;"> ESFP stands for Extraversion, Sensing, Feeling, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey labeled ESFP group The Performer/ The Entertainer because they have a bright and energetic nature, and ESFP is one of the four personality types of The Artisan. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>ESTJ: "The Supervisor/ The Executive"</h5> 
+                                    <p>People of the ESTJ personality type are recognized for their organizational skills, loyalty, and hard work. They value dependability and prefer that events occur in a logical order. ESTJs are orderly, principle, and conscientious individuals who like to do tasks in a methodical, rational way. <br><br><b style="text-decoration:underline;"> ESTJ stands for Extraversion, Sensing, Thinking, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ESTJ The Supervisor/ The Executive because they tend to be responsible and make sure everything is done correctly. ESTJ is one of the four personality types of The Guardian. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>ESTP: "The Doer/ The Entrepreneur"</h5> 
+                                    <p>People with the ESTP MBTI personality type are recognized for their bright, active, and adventurous behavior. ESTPs are high-energy thrill seekers who thrive on putting out actual or metaphorical fires. Although they appear to be very social, they are rarely sensitive; the ESTP prefers fast-paced and humorous situations to emotional or serious ones. <br><br><b style="text-decoration:underline;"> ESTP stands for Extraversion, Sensing, Thinking, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ESTP The Doer/ The Entrepreneur because their goal is to convey their self-worth and ideas to others. ESTP is one of the 4 personality types of The Artisan. </b> </p>
+
+                                </div>
+
+                               
+                                <div class="text-center">
+                                    <h5>INFJ: "The Counselor/ The Advocate"</h5> 
+                                    <p>Individuals with the INFJ MBTI personality type are determined, reserved, and altruistic in their behavior. They are idealists with a strong desire to improve the world. They like personal relationships with a few people but prefer to work alone most of the time. INFJs are also nurturing creatives with a strong sense of personal integrity and a desire to help others attain their full potential. <br><br><b style="text-decoration:underline;"> INFJ stands for Introversion, iNtuition, Feeling, and Judgment </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named INFJ The Counselor/ The Advocate because they are very good at giving instructions and INFJ is one of the 4 personality types of an Idealist group. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>INFP: "The Idealist/ The Mediator"</h5> 
+                                    <p>INFP personalities are cautious, idealistic, and flexible in their conduct. They are inquisitive individuals that are always preoccupied with their thoughts. INFPs are sensitive, compassionate, and empathic, and they are genuinely concerned with their own and others' personal growth. <br><br><b style="text-decoration:underline;"> INFP stands for Introversion, iNtuition, Feeling, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named INFP The Idealist/ The Mediator because they tend to be sympathetic, selfless, and deeply compassionate to help others, and INFP is one of the four personality types of the Idealist group. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>INTJ: "The Mastermind/ The Architect"</h5> 
+                                    <p>Individuals of the INTJ personality type are confident, analytical, and ambitious in their behaviors. They are very logical and have a great desire to learn. MBTI types are typically autonomous and selective in their relationships, preferring to connect with intellectually fascinating people. <br><br><b style="text-decoration:underline;"> INTJ stands for Introversion, iNtuition, Thinking, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named INTJ The Mastermind/ The Architect because they have logical thoughts and masterful strategies. INTJ is one of the four personality types of The Rational group. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>INTP: "The Thinker/ The Logician"</h5> 
+                                    <p>INTP MBTI personalities are analytical, objective, and reasonable in their behavior. They spend a lot of time in their heads, researching topics, making connections, and attempting to figure out how things work. They like researching new theories and ideas, thus they are usually responsible for significant breakthroughs in their chosen field. <br><br><b style="text-decoration:underline;"> INTP stands for Introversion, iNtuition, Thinking, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named INTP The Thinker/ The Logician because of their intuitive understanding of complex systems. INTP is one of the four personality types of The Rational. </b> </p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>ISFJ: "The Protector/ The Defender"</h5> 
+                                    <p>ISFJ MBTI types are generally modest, industrious, and enthusiastic. They are usually concerned with completing a task flawlessly and prefer to work methodically. They are meticulous and methodical, and they will not give up until the work is finished. <br><br><b style="text-decoration:underline;"> ISFJ stands for Introversion, Sensing, Feeling, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ISFJ The Protector/ The Defender because they are very interested in caring, protecting, and helping others in very practical ways and ISFJ is one of the four personality types of The Guardian. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>ISFP: "The Composer/ The Adventurer"</h5> 
+                                    <p>ISFPs are humble and quiet, yet they are also warm and gregarious, eager to share their experiences with others. ISFPs have an acute sense of beauty and seek it out in their surroundings. They are very sensitive to sensory inputs and often have a natural talent for the arts. <br><br><b style="text-decoration:underline;"> ISFP stands for Introversion, Sensing, Feeling, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ISFP The Composer/ The Adventurer because they have an innate sensitivity to creating works of art. ISFP is one of four personality types of The Artisan. </b> </p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>ISTJ: "The Inspector/ The Logistician"</h5> 
+                                    <p>ISTJs are the professional organizers that are motivated by systems and institutions to build and preserve order. They are trustworthy and obedient, interested with maintaining social order and upholding standards. They like to be alone or in small groups of close friends, and they may be quiet and reserved in large groups. <br><br><b style="text-decoration:underline;"> ISTJ stands for Introversion, Sensing, Thinking, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ISTJ The Inspector/ The Logistician because they place great emphasis on the small details and precision of doing something. ISTJ is one of the four personality types of The Guardian. </b></p>
+
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>ISTP: "The Craftsman/ The Virtuoso"</h5> 
+                                    <p>ISTPs are skilled artisans who like debugging and understand mechanics. They approach their environment with a flexible logic, looking for genuine solutions to the problems they face. They are self-sufficient and adaptable, and they interact with their environment in a self-directed, chaotic manner. <br><br><b style="text-decoration:underline;"> ISTP stands for Introversion, Sensing, Thinking, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ISTP The Craftsman/ The Virtuoso because they have innate mechanical ability and can easily use tools or equipment. ISTP is one of the four personality types of The Artisan. </b></p>
+
+                                </div>
+
+                                <p>Information retrieved from: https://www.xpersonalitytest.com/</p>
+                  
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="MT_info">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Multiple Intelligences</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive-cus">
+                                <h4>History</h4>
+                                <p>
+                                    Developmental psychologist at Harvard University Howard Gardner developed the theory of Multiple Intelligences. According to Gardner, people have different kinds of intelligences, and the Multiple Intelligences framework is fairer than IQ tests, which only measure one type of aptitude. The theory of Multiple Intelligences enjoys considerable popularity among educators, with many teachers using it in the classroom to help young people discover their path in life.
+                                    <br>
+                                    <br>
+                                    The IDRlabs Multiple Intelligences (MI) Test (IDR-MIT) was developed by IDRlabs. The IDR-MIT is based on the work of Dr. Howard Gardner, who authored the Multiple Intelligences Theory. The IDR-MIT is not associated with any specific researchers in the field of educational psychology or any affiliated research institutions.
+                                    <br>
+                                    <br>
+                                    The IDRlabs Multiple Intelligences Test was informed by Gardner’s Multiple Intelligences Model, as published in Gardner, Howard (1983; 1993) Frames of Mind: The theory of multiple intelligences, New York: Basic Books; Gardner, Howard (1999) Intelligence Reframed. Multiple intelligences for the 21st century, New York: Basic Books; Brualdi, A, C. (1996) ‘Multiple Intelligences: Gardner’s Theory. ERIC Digest’,Eric Digests.
+                                    <br>
+                                    <br>
+                                    The work of Dr. Gardner has also informed some of the criteria in the form of the widely used educational and psychological model, the Multiple Intelligences Theory, for academic and psychological use especially by qualified professionals in the academe. The present test is intended for educational purposes only. IDRlabs and the present IDRlabs Multiple Intelligences Test are independent of the above researchers, organizations, or their affiliated institutions.
+                                    <br>
+                                    
+                                    <p>Information retrieved from: https://www.idrlabs.com/multiple-intelligences/test.php/</p>
+                                </p>
+                                       
+                                
+                                <div class="text-center">
+                                    <h5>Existential:</h5>
+                                    <p><b>Existential Intelligence or “Cosmic Smarts”</b>  is the ability to use meta-cognition in seeking to know more about life’s purpose or the unknown. People high in this trait are interested in intellectual debates and big questions such as “Why are we here?” or “What is the meaning of it all?” 
+                                        <br> High existential intelligence is often found in philosophers, writers, spiritual leaders, public speakers, meditation instructors, and the like. They learn best by looking at a topic from various angles, asking the deep questions, connecting insights they have gleaned with social issues, and synthesizing ideas.
+                                    </p>
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>Interpersonal:</h5>
+                                    <p><b>Interpersonal Intelligence or “People Smarts”</b> is the ability to effectively interact with and understand other people. 
+                                        <br> People high in this trait are usually known for their advanced communication skills, empathy, and ability to assess others’ feelings and intentions correctly. They are also usually great at solving conflicts and creating positive relationships around them. Psychologists, educators, politicians, social workers, and people who work in sales are usually high in this trait.
+                                    </p>
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>Intrapersonal:</h5>
+                                    <p> <b>Intrapersonal Intelligence or “self smarts”</b> is the ability to understand oneself and utilize such knowledge in one’s decision-making and planning. People high in this trait are typically well aware of their thoughts, feelings, weaknesses, strengths, and motivations. 
+                                        <br> Moreover, they usually have rich and rewarding introspections and like to process their experiences in depth. They express their feelings creatively and put others at ease by being maturely self-aware. This type of intelligence is often demonstrated by psychologists, writers, theorists, philosophers, scientists, and spiritual leaders. 
+                                    </p>
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>Kinesthetic:</h5> 
+                                    <p> <b>Bodily-Kinesthetic Intelligence or “body smarts”</b> is the ability to use the body to communicate, solve challenges and problems, and process information through movement, gestures, and facial expressions. This type of intelligence is associated with dexterity, flexibility, coordination, and other somatic-motory skills.
+                                        <br><br> Dancers, athletes, sculptors, carpenters, and surgeons all tend to be high in body smarts. Those with this kind of intelligence often learn better through movement, doing, touching, and physically interacting with others. They also usually have good muscle memory and tend to be great with tools.  
+                                    </p>
+                                </div>
+
+                               
+                                <div class="text-center">
+                                    <h5>Logical:</h5> 
+                                    <p> <b>Logical-Mathematical Intelligence, “number smarts” or “reasoning smarts,”</b> is the ability to work well with numbers, complex concepts, and scientific ideas. It involves calculating, quantifying, hypothesizing, and thinking in mathematical abstractions and sequential reasoning, as well as inductive and deductive thinking. 
+                                        <br> People who are high in this type of intelligence are often interested in sequential patterns, logical connections, puzzles, strategy games, experiments, and games that involve numbers (such as Sudoku). This type of intelligence is often found among mathematicians, detectives, and scientists.  
+                                    </p>
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>Musical:</h5> 
+                                    <p> <b>Musical Intelligence or “sound smarts”</b> is the ability to distinguish and appreciate the different elements of music as exhibited by singers, musicians, composers, conductors. People high in this type of intelligence are usually keen listeners who excel in their capacity to create, remember, and discern musical patterns, as well as melodies, beats, and songs. 
+                                        <br><br> It is not uncommon to find people high in musical intelligence humming, drumming, or singing to themselves. Many also learn better through devices that involve rhymes, beats, or songs. 
+                                    </p>
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>Naturalistic:</h5> 
+                                    <p> <b>Naturalistic Intelligence or “nature smarts”</b> is the ability to be in tune with the natural world and discern the patterns that govern its ecology. People high in this trait are interested in learning more about nature, exploring and saving the environment, and nurturing life.  
+                                        <br><br> They are typically skilled at looking for relationships, differences, and patterns in nature. Nature-smart people enjoy hiking, camping, gardening, and other outdoor activities. This intelligence is demonstrated by farmers, biologists, foresters, geologists, breeders, horticulturists, and animal trainers. 
+                                    </p>
+                                </div>
+
+                                
+                                <div class="text-center">
+                                    <h5>Verbal:</h5> 
+                                    <p> <b>Linguistic Intelligence or “word smarts”</b> is competence with spoken and written language. It is the ability to effectively use words to express ideas (as well as understand the ideas of others through their words) and to comprehend complex vocabularies using uncommon, technical, or foreign words.   
+                                        <br><br> This type of intelligence is often found among writers, public speakers, language learners and teachers, and in other professions which involve juggling words and speech. Linguistic intelligence has also been associated with academic problem-solving and abstract reasoning skills. Those who are high in this type of intelligence often enjoy crossword puzzles, Scrabble, reading and writing, and all manner of wordplay.
+                                    </p>
+                                </div>
+
+                               
+                                <div class="text-center">
+                                    <h5>Visual:</h5> 
+                                    <p> <b>Spatial-Visual Intelligence or “picture smarts”</b> is the capacity to think in spatial relations and images. People high in this trait often excel in areas related to artistic skills, mental imagery manipulation, pictorial imagination, and spatial analysis.   
+                                        <br><br> This type of intelligence is often found in photographers, painters, interior designers, graphic designers, navigators, architects, and other professions where visual thinking is at a premium. Picture smart individuals are often found doodling or drawing; they are good at distinguishing and blending colors, interpreting visual illustrations, and seeing the patterns in visual input and imagery.
+                                    </p>
+                                </div>
+
+                                <p>Information retrieved from: https://www.idrlabs.com/multiple-intelligences/test.php/</p>
+                                
+                    
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="SE_info">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Software Engineering Roles</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive-cus">
+                                <ul>
+                                    <li>Project Manager</li>
+                                    <li>Lead Programmer</li>
+                                    <li>UI/UX Designer</li>
+                                    <li>Business Analyst</li>
+                                    <li>Quality Assurance Engineer</li>
+                                </ul>
+                            </div>
+                            
+                            <br>
+                            <h4 class="text-center">Best Software Engineering Role System(BeSER)</h4>
+                            <p class="text-center">
+                                Western Mindanao State University
+                                <br>
+                                College of Computing Studies
+                                <br>
+                                Zamboanga City, Philippines
+                                <br>
+                                All rights reverved 2022-2023.
+
+                            </p>  
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+           </div>
+        </main>
+    </div>
+
+    <!-- logout -->
+    <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="logoutModalLabel">Logout</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body">
+            <h5 class="text-center"> Do you wish to logout?</h5>
+            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                <a href="{{ url_for('logout') }}" class="btn btn-success">Yes</a>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#data_table').DataTable();
+        } );
+    </script>
+
+    <script>
+        var loader =  document.getElementById("preloader");
+        window.addEventListener("load", function(){
+            loader.style.display = "none";
+        })
+    </script>
+    
+</body>
+</html>

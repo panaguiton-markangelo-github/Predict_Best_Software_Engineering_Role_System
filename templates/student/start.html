@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grades</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/student_pages.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loading.css') }}">
+</head>
+<body style="background-color: #f1f5f9;">
+    <div id="preloader">
+    </div>
+    <div class="container">
+        <div class="main-body">
+        
+              <!-- Breadcrumb -->
+              <nav style="padding: .1rem; margin: .5rem;" aria-label="breadcrumb" class="main-breadcrumb">
+                <ol class="breadcrumb">
+                {% if session['repredict'] is defined and session['repredict'] %}
+                <li  class="breadcrumb-item active">Home</li>
+                {% else %}
+                <li  class="breadcrumb-item"><a href="{{ url_for('dashboard_student_no_roles') }}">Home</a></li>
+                {% endif %}
+                  <li  class="breadcrumb-item active">Prediction</li>
+                  <li class="breadcrumb-item active" aria-current="page">Grades</li>
+                </ol>
+              </nav>
+              <!-- /Breadcrumb -->
+        
+              <div class="row gutters-sm">
+                <div class="container ">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                        <h4 class="text-center">Welcome IT/CS Fam</h4>
+                        <p class="text-center">Please fill in the grades on the fields.</p>
+                        <p class="text-center">These fields will be used by the system to compute the GPA.</p>
+                        <hr>
+                        <form method="POST" action="{{url_for('start')}}">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Computer Programming I</h6>
+                                </div>
+                                <div class="col-sm-5">
+                                    <select class="form-control" name="CC101"required>
+                                        <option selected value=""> </option>
+                                        <option value="1"> 1 </option>
+                                        <option value="1.25"> 1.25 </option>
+                                        <option value="1.5"> 1.5 </option>
+                                        <option value="1.75"> 1.75 </option>
+                                        <option value="2"> 2 </option>
+                                        <option value="2.25"> 2.25 </option>
+                                        <option value="2.5"> 2.5 </option>
+                                        <option value="2.75"> 2.75 </option>
+                                        <option value="3"> 3 </option>
+                                        <option value="5"> 5 </option>
+                                    </select>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row d-flex justify-content-center">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Computer Programming II</h6>
+                                </div>
+                                <div class="col-sm-5 text-secondary">
+                                    <select class="form-control" name="CC102" required>
+                                        <option selected value=""> </option>
+                                        <option value="1"> 1 </option>
+                                        <option value="1.25"> 1.25 </option>
+                                        <option value="1.5"> 1.5 </option>
+                                        <option value="1.75"> 1.75 </option>
+                                        <option value="2"> 2 </option>
+                                        <option value="2.25"> 2.25 </option>
+                                        <option value="2.5"> 2.5 </option>
+                                        <option value="2.75"> 2.75 </option>
+                                        <option value="3"> 3 </option>
+                                        <option value="5"> 5 </option>
+                                    </select>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row d-flex justify-content-center">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Introduction to Computing</h6>
+                                </div>
+                                <div class="col-sm-5 text-secondary">
+                                    <select class="form-control" name="ITC" required>
+                                        <option selected value=""> </option>
+                                        <option value="1"> 1 </option>
+                                        <option value="1.25"> 1.25 </option>
+                                        <option value="1.5"> 1.5 </option>
+                                        <option value="1.75"> 1.75 </option>
+                                        <option value="2"> 2 </option>
+                                        <option value="2.25"> 2.25 </option>
+                                        <option value="2.5"> 2.5 </option>
+                                        <option value="2.75"> 2.75 </option>
+                                        <option value="3"> 3 </option>
+                                        <option value="5"> 5 </option>
+                                    </select>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row d-flex justify-content-center">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Information Management</h6>
+                                </div>
+                                <div class="col-sm-5 text-secondary">
+                                    <select class="form-control" name="IM" required>
+                                        <option selected value=""> </option>
+                                        <option value="1"> 1 </option>
+                                        <option value="1.25"> 1.25 </option>
+                                        <option value="1.5"> 1.5 </option>
+                                        <option value="1.75"> 1.75 </option>
+                                        <option value="2"> 2 </option>
+                                        <option value="2.25"> 2.25 </option>
+                                        <option value="2.5"> 2.5 </option>
+                                        <option value="2.75"> 2.75 </option>
+                                        <option value="3"> 3 </option>
+                                        <option value="5"> 5 </option>
+                                    </select>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row d-flex justify-content-center">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Object Oriented Programming</h6>
+                                </div>
+                                <div class="col-sm-5 text-secondary">
+                                    <select class="form-control" name="OOP" required>
+                                        <option selected value=""> </option>
+                                        <option value="1"> 1 </option>
+                                        <option value="1.25"> 1.25 </option>
+                                        <option value="1.5"> 1.5 </option>
+                                        <option value="1.75"> 1.75 </option>
+                                        <option value="2"> 2 </option>
+                                        <option value="2.25"> 2.25 </option>
+                                        <option value="2.5"> 2.5 </option>
+                                        <option value="2.75"> 2.75 </option>
+                                        <option value="3"> 3 </option>
+                                        <option value="5"> 5 </option>
+                                    </select>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row d-flex justify-content-center">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Human Computer Interaction</h6>
+                                </div>
+                                <div class="col-sm-5 text-secondary">
+                                    <select class="form-control" name="HCI" required>
+                                        <option selected value=""> </option>
+                                        <option value="1"> 1 </option>
+                                        <option value="1.25"> 1.25 </option>
+                                        <option value="1.5"> 1.5 </option>
+                                        <option value="1.75"> 1.75 </option>
+                                        <option value="2"> 2 </option>
+                                        <option value="2.25"> 2.25 </option>
+                                        <option value="2.5"> 2.5 </option>
+                                        <option value="2.75"> 2.75 </option>
+                                        <option value="3"> 3 </option>
+                                        <option value="5"> 5 </option>
+                                    </select>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="row d-flex justify-content-center">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Data Structure and Algorithms</h6>
+                                </div>
+                                <div class="col-sm-5 text-secondary">
+                                    <select class="form-control" name="DSA" required>
+                                        <option selected value=""> </option>
+                                        <option value="1"> 1 </option>
+                                        <option value="1.25"> 1.25 </option>
+                                        <option value="1.5"> 1.5 </option>
+                                        <option value="1.75"> 1.75 </option>
+                                        <option value="2"> 2 </option>
+                                        <option value="2.25"> 2.25 </option>
+                                        <option value="2.5"> 2.5 </option>
+                                        <option value="2.75"> 2.75 </option>
+                                        <option value="3"> 3 </option>
+                                        <option value="5"> 5 </option>
+                                    </select>
+                                </div>
+                              </div>
+                              <hr>
+                              
+                              <div class="row">
+                                <div class="col-sm-12 d-flex justify-content-center">
+                                    {% if session['repredict'] is defined and session['repredict'] %}
+                                        <button type="submit" name="submit" class="btn btn-success ">Submit</button>
+                                    {% else %}
+                                        <a href="{{ url_for('dashboard_student_no_roles') }}" class="btn btn-danger me-3">Cancel</a>
+                                        <button type="submit" name="submit" class="btn btn-success ">Submit</button>
+                                    {% endif %}
+                                </div>
+                              </div>
+                        </form>
+                      
+                    </div>
+                  </div>
+    
+                 
+                </div>
+                
+              </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+      var loader =  document.getElementById("preloader");
+      window.addEventListener("load", function(){
+          loader.style.display = "none";
+      })
+    </script>
+    
+</body>
+</html>

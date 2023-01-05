@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Intelligences</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/student_pages.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loading.css') }}">
+</head>
+<body style="background-color: #f1f5f9;">
+    <div id="preloader">
+	</div>
+    <div class="container">
+        <div class="main-body">
+        
+              <!-- Breadcrumb -->
+              <nav style="padding: .1rem; margin: .5rem;" aria-label="breadcrumb" class="main-breadcrumb">
+                <ol class="breadcrumb">
+                  <li  class="breadcrumb-item active">Home</li>
+                  <li  class="breadcrumb-item active">Prediction</li>
+                  <li class="breadcrumb-item active" aria-current="page">Grades</li>
+                  <li class="breadcrumb-item active" aria-current="page">Personality Type</li>
+                  <li class="breadcrumb-item active" aria-current="page">Multiple Intelligences</li>
+                </ol>
+              </nav>
+              <!-- /Breadcrumb -->
+        
+              <div class="row gutters-sm">
+                <div class="container ">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                        <h4 class="text-center">Multiple Intelligences</h4>
+                        <p class="text-center">"Based on Dr. Howard Gardner's Theory of Multiple Intelligences"</p>
+                        <h5>Process:</h5>
+                        <ol>
+                            <li>If you know your multiple-intelligences kindly select that applies to you, otherwise, take the test.</li>
+                            <li>To take the multiple intelligence test, click the "click here to take the test" button .It will then redirect the user in an external website to take the test.</li>
+                            <li>The user can now take the test by answering the questions through scrolling the bar into the given choice.</li>
+                            <li>After taking the test, the result can be viewed by the user, and after viewing the result, the user should check his/her strongest multiple intelligence/s below Note: Only check the strongest multiple intelligences result.</li>
+                        </ol>
+                        <a href="https://www.idrlabs.com/multiple-intelligences/test.php" target="_blank" class="btn btn-info">Click here to take the test!</a>
+                        <hr>
+                        
+                        <form method="POST" action="{{url_for('mt')}}">
+                          <div class="boxes">
+                            <input type="checkbox" name = "mul_int" value="existential" id="box-1">
+                            <label for="box-1">Existential</label>
+        
+                            <div id="container-1" style="display:none; text-align: center">
+                                <p><b>Existential Intelligence or “Cosmic Smarts”</b>  is the ability to use meta-cognition in seeking to know more about life’s purpose or the unknown. People high in this trait are interested in intellectual debates and big questions such as “Why are we here?” or “What is the meaning of it all?” 
+                                  <br> High existential intelligence is often found in philosophers, writers, spiritual leaders, public speakers, meditation instructors, and the like. They learn best by looking at a topic from various angles, asking the deep questions, connecting insights they have gleaned with social issues, and synthesizing ideas.
+                                </p>
+                                
+                            </div>
+        
+                            <input type="checkbox" name = "mul_int" value="interpersonal" id="box-2">
+                            <label for="box-2">Interpersonal</label>
+        
+                            <div id="container-2" style="display:none; text-align: center">
+                                <p><b>Interpersonal Intelligence or “People Smarts”</b> is the ability to effectively interact with and understand other people. 
+                                  <br> People high in this trait are usually known for their advanced communication skills, empathy, and ability to assess others’ feelings and intentions correctly. They are also usually great at solving conflicts and creating positive relationships around them. Psychologists, educators, politicians, social workers, and people who work in sales are usually high in this trait.
+                                </p>
+                                
+                                
+                            </div>
+                          
+                            <input type="checkbox" name = "mul_int" value="intrapersonal" id="box-3">
+                            <label for="box-3">Intrapersonal</label>
+        
+                            <div id="container-3" style="display:none; text-align: center">
+                                <p> <b>Intrapersonal Intelligence or “self smarts”</b> is the ability to understand oneself and utilize such knowledge in one’s decision-making and planning. People high in this trait are typically well aware of their thoughts, feelings, weaknesses, strengths, and motivations. 
+                                    <br> Moreover, they usually have rich and rewarding introspections and like to process their experiences in depth. They express their feelings creatively and put others at ease by being maturely self-aware. This type of intelligence is often demonstrated by psychologists, writers, theorists, philosophers, scientists, and spiritual leaders. 
+                                </p>
+                               
+                                
+                            </div>
+            
+                            <input type="checkbox" name = "mul_int" value="kinesthetic" id="box-4">
+                            <label for="box-4">Kinesthetic</label>
+        
+                            <div id="container-4" style="display:none; text-align: center">
+                                <p> <b>Bodily-Kinesthetic Intelligence or “body smarts”</b> is the ability to use the body to communicate, solve challenges and problems, and process information through movement, gestures, and facial expressions. This type of intelligence is associated with dexterity, flexibility, coordination, and other somatic-motory skills.
+                                    <br><br> Dancers, athletes, sculptors, carpenters, and surgeons all tend to be high in body smarts. Those with this kind of intelligence often learn better through movement, doing, touching, and physically interacting with others. They also usually have good muscle memory and tend to be great with tools.  
+                                </p>
+                                
+                                
+                            </div>
+                          
+                            <input type="checkbox" name = "mul_int" value="logical" id="box-5">
+                            <label for="box-5">Logical</label>
+        
+                            <div id="container-5" style="display:none; text-align: center">
+                                <p> <b>Logical-Mathematical Intelligence, “number smarts” or “reasoning smarts,”</b> is the ability to work well with numbers, complex concepts, and scientific ideas. It involves calculating, quantifying, hypothesizing, and thinking in mathematical abstractions and sequential reasoning, as well as inductive and deductive thinking. 
+                                    <br> People who are high in this type of intelligence are often interested in sequential patterns, logical connections, puzzles, strategy games, experiments, and games that involve numbers (such as Sudoku). This type of intelligence is often found among mathematicians, detectives, and scientists.  
+                                </p>
+                                
+                                
+                            </div>
+                          
+                            <input type="checkbox" name = "mul_int" value="musical" id="box-6">
+                            <label for="box-6">Musical</label>
+        
+                            <div id="container-6" style="display:none; text-align: center">
+                                <p> <b>Musical Intelligence or “sound smarts”</b> is the ability to distinguish and appreciate the different elements of music as exhibited by singers, musicians, composers, conductors. People high in this type of intelligence are usually keen listeners who excel in their capacity to create, remember, and discern musical patterns, as well as melodies, beats, and songs. 
+                                    <br><br> It is not uncommon to find people high in musical intelligence humming, drumming, or singing to themselves. Many also learn better through devices that involve rhymes, beats, or songs. 
+                                </p>
+                            
+                                
+                            </div>
+            
+                            <input type="checkbox" name = "mul_int" value="naturalistic" id="box-7">
+                            <label for="box-7">Naturalistic</label>
+        
+                            <div id="container-7" style="display:none; text-align: center">
+                                <p> <b>Naturalistic Intelligence or “nature smarts”</b> is the ability to be in tune with the natural world and discern the patterns that govern its ecology. People high in this trait are interested in learning more about nature, exploring and saving the environment, and nurturing life.  
+                                    <br><br> They are typically skilled at looking for relationships, differences, and patterns in nature. Nature-smart people enjoy hiking, camping, gardening, and other outdoor activities. This intelligence is demonstrated by farmers, biologists, foresters, geologists, breeders, horticulturists, and animal trainers. 
+                                </p>
+                                
+                                
+                            </div>
+                          
+                            <input type="checkbox" name = "mul_int" value="verbal" id="box-8">
+                            <label for="box-8">Verbal</label>
+        
+                            <div id="container-8" style="display:none; text-align: center">
+                                <p> <b>Linguistic Intelligence or “word smarts”</b> is competence with spoken and written language. It is the ability to effectively use words to express ideas (as well as understand the ideas of others through their words) and to comprehend complex vocabularies using uncommon, technical, or foreign words.   
+                                    <br><br> This type of intelligence is often found among writers, public speakers, language learners and teachers, and in other professions which involve juggling words and speech. Linguistic intelligence has also been associated with academic problem-solving and abstract reasoning skills. Those who are high in this type of intelligence often enjoy crossword puzzles, Scrabble, reading and writing, and all manner of wordplay.
+                                </p>
+                               
+                                
+                            </div>
+                          
+                            <input type="checkbox" name = "mul_int" value="visual" id="box-9">
+                            <label for="box-9">Visual</label>
+        
+                            <div id="container-9" style="display:none; text-align: center">
+                                <p> <b>Spatial-Visual Intelligence or “picture smarts”</b> is the capacity to think in spatial relations and images. People high in this trait often excel in areas related to artistic skills, mental imagery manipulation, pictorial imagination, and spatial analysis.   
+                                    <br><br> This type of intelligence is often found in photographers, painters, interior designers, graphic designers, navigators, architects, and other professions where visual thinking is at a premium. Picture smart individuals are often found doodling or drawing; they are good at distinguishing and blending colors, interpreting visual illustrations, and seeing the patterns in visual input and imagery.
+                                </p>
+                                
+                            </div>
+                          </div>
+
+                          <hr>
+                          
+                          <div class="row">
+                            <div class="col-sm-12 d-flex justify-content-center">
+                                
+                              <button type="submit" name="submit" class="btn btn-success ">Submit</button>
+                                
+                            </div>
+                          </div>
+                        </form>
+                      
+                    </div>
+                  </div>
+  
+                </div>
+                
+              </div>
+            </div>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+      $(document).ready(function(){
+          $('#box-1').change(function(){
+              $('#container-1').toggle();
+          });
+
+          $('#box-2').change(function(){
+              $('#container-2').toggle();
+          });
+
+          $('#box-3').change(function(){
+              $('#container-3').toggle();
+          });
+
+          $('#box-4').change(function(){
+              $('#container-4').toggle();
+          });
+
+          $('#box-5').change(function(){
+              $('#container-5').toggle();
+          });
+
+          $('#box-6').change(function(){
+              $('#container-6').toggle();
+          });
+
+          $('#box-7').change(function(){
+              $('#container-7').toggle();
+          });
+
+          $('#box-8').change(function(){
+              $('#container-8').toggle();
+          });
+
+          $('#box-9').change(function(){
+              $('#container-9').toggle();
+          });
+      });
+  </script>
+
+    <script>
+        var loader =  document.getElementById("preloader");
+        window.addEventListener("load", function(){
+            loader.style.display = "none";
+        })
+    </script>
+    
+</body>
+</html>

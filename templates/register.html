@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loading.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <div id="preloader">
+	</div>
+     <!-- Body of Form starts -->
+  	<div class="container">
+
+        <span>REGISTRATION FORM</span>
+
+        <form action = "/register" method="POST" autocomplete="off">
+
+          {% if mesage is defined and mesage %}
+            <div style = "text-align: center;color: yellow;" class="alert alert-warning">{{ mesage }}</div>
+          {% endif %}
+
+          <!---User Type------>
+          <div class="box">
+            <label for="userType" class="fl fontLabel"> User Type: </label>
+              <div class="fl iconBox"><i class="fa fa-users" aria-hidden="true"></i></div>
+              <div class="fr">
+                <select name="userType" id="userType" class="textBox" onchange="check();" style="width: 210px;" required>
+                  <option selected value="none">Select user type</option>
+                  <option value="teacher"> Teacher </option>
+                  <option value="student"> Student </option>
+                </select>
+              </div>
+              <div class="clr"></div>
+          </div>
+          <!---User Type---->
+
+          <!--First name-->
+              <div class="box">
+                <label for="firstName" class="fl fontLabel"> First Name: </label>
+                    <div class="new iconBox">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                </div>
+                  <div class="fr">
+                          <input type="text" name="firstName" placeholder="First Name"
+                class="textBox" autofocus="on" required>
+                  </div>
+                  <div class="clr"></div>
+              </div>
+              <!--First name-->
+  
+  
+          <!--Last name-->
+              <div class="box">
+                <label for="lastName" class="fl fontLabel"> Last Name: </label>
+                  <div class="fl iconBox"><i class="fa fa-user" aria-hidden="true"></i></div>
+                  <div class="fr">
+                          <input type="text" required name="lastName"
+                placeholder="Last Name" class="textBox">
+                  </div>
+                  <div class="clr"></div>
+              </div>
+              <!--Last name-->
+  
+              <!---Email ID---->
+              <div class="box">
+                <label for="email" class="fl fontLabel"> Email: </label>
+                  <div class="fl iconBox"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                  <div class="fr">
+                          <input type="email" required name="email" placeholder="Email" class="textBox">
+                  </div>
+                  <div class="clr"></div>
+              </div>
+              <!--Email ID----->
+  
+  
+              <!---Password------>
+              <div class="box">
+                <label for="password" class="fl fontLabel"> Password: </label>
+                  <div class="fl iconBox"><i class="fa fa-key" aria-hidden="true"></i></div>
+                  <div class="fr">
+                          <input type="Password" required name="password" placeholder="Password" class="textBox">
+                  </div>
+                  <div class="clr"></div>
+              </div>
+              <!---Password---->
+
+              <!--Program-->
+          <div id = "boxProg" class="box">
+            <label for="program" class="fl fontLabel"> Program: </label>
+              <div class="fl iconBox"><i class="fa fa-id-card" aria-hidden="true"></i></div>
+              <div class="fr">
+                <select name="program" id="program" class="textBox" style="width: 210px;" required>
+                  <option selected value=""> </option>
+                  <option value="BSIT">BS in Information Technology</option>
+                  <option value="BSCS">BS in Computer Science</option>
+                </select>
+              </div>
+              <div class="clr"></div>
+          </div>
+          <!--Program-->
+
+           <!--Section-->
+           <div id = "boxSec" class="box">
+            <label for="section" class="fl fontLabel"> Section: </label>
+              <div class="fl iconBox"><i class="fa fa-id-card" aria-hidden="true"></i></div>
+              <div class="fr">
+                <select name="section" id="section" class="textBox" style="width: 210px;" required>
+                  <option selected value=""> </option>
+                  <option value="3A">3A</option>
+                  <option value="3B">3B</option>
+                  <option value="3C">3C</option>
+                </select>
+              </div>
+              <div class="clr"></div>
+          </div>
+          <!--Section-->
+  
+              <!---Submit Button------>
+              <div class="box" style="background: #2d3e3f">
+                      <input type="Submit" name="Submit" class="submit" value="SUBMIT">
+
+                      <br>
+                      <br>
+                      <p style="color: white;font-size: 0.8rem;">Already have an account?  <a style="color: white;text-decoration: none;" href="{{url_for('login')}}"> Login here</a></p>
+              </div>
+              <!---Submit Button----->
+
+        
+
+        </form>
+    </div>
+    <!--Body of Form ends--->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+      const input1 = document.getElementById('program');
+      const input2 = document.getElementById('section');
+      $('#userType').change(function(){
+        if($(this).val()==="teacher"){
+          $('#boxSec').hide();
+          $('#boxProg').hide();
+          input1.removeAttribute('required');
+          input2.removeAttribute('required');
+        }
+        else if($(this).val()==="none"){
+          $('#boxSec').hide();
+          $('#boxProg').hide();
+        }
+        else{
+          $('#boxSec').show();
+          $('#boxProg').show();
+          input1.setAttribute('required', '');
+          input2.setAttribute('required', '');
+        }
+  
+      }).change();
+    </script>
+
+    <script>
+      var loader =  document.getElementById("preloader");
+      window.addEventListener("load", function(){
+        loader.style.display = "none";
+      })
+    </script>
+</body>
+</html>

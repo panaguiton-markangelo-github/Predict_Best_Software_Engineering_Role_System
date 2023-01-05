@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality Type</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/student_pages.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loading.css') }}">
+</head>
+<body style="background-color: #f1f5f9;">
+    <div id="preloader">
+    </div>
+    <div class="container">
+        <div class="main-body">
+        
+              <!-- Breadcrumb -->
+              <nav style="padding: .1rem; margin: .5rem;" aria-label="breadcrumb" class="main-breadcrumb">
+                <ol class="breadcrumb">
+                  <li  class="breadcrumb-item active">Home</li>
+                  <li  class="breadcrumb-item active">Prediction</li>
+                  <li class="breadcrumb-item active" aria-current="page">Grades</li>
+                  <li class="breadcrumb-item active" aria-current="page">Personality Type</li>
+                </ol>
+              </nav>
+              <!-- /Breadcrumb -->
+        
+              <div class="row gutters-sm">
+                <div class="container ">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                        <h4 class="text-center">Personality Types</h4>
+                        <p class="text-center">Based on MYERS-BRIGGS TYPE INDICATOR (MBTI)</p>
+                        <h5>Process:</h5>
+                        <ol> 
+                            <li>If the user already know his/her personality type, the user can directly select his/her personality type in the field. Otherwise, take the personality type test.</li>
+                            <li>To take the personality type test, click the "click here to take the test" button .It will then redirect the user in an external website to take the test.</li>
+                            <li>Cick the "take the test" in the external website which can be found in the upper right corner of the navigation bar.</li>
+                            <li>After taking the test, the result can be viewed by the user, and after viewing the result, the user should select his/her personality type in the field which consists of <em>4 letters(e.g. ENTJ)</em> in the field.</li>
+                        </ol>
+                        <a href="https://www.xpersonalitytest.com/" target="_blank" class="btn btn-info">Click here to take the test!</a>
+                        <hr>
+                        
+                        
+                        
+                        <form method="POST" action="{{url_for('pt')}}">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-sm-3">
+                                  <h6 class="mb-0">Select your personality type:</h6>
+                                </div>
+                                <div class="col-sm-5">
+                                  <select class="form-control" name="personality" id="personality" onchange="check();" required>
+                                    <option selected value=""> </option>
+                                    <option value="ENFJ"> ENFJ </option>
+                                    <option value="ENFP"> ENFP </option>
+                                    <option value="ENTJ"> ENTJ </option>
+                                    <option value="ENTP"> ENTP </option>
+                                    <option value="ESFJ"> ESFJ </option>
+                                    <option value="ESFP"> ESFP </option>
+                                    <option value="ESTJ"> ESTJ </option>
+                                    <option value="ESTP"> ESTP </option>
+                                    <option value="INFJ"> INFJ </option>
+                                    <option value="INFP"> INFP </option>
+                                    <option value="INTJ"> INTJ </option>
+                                    <option value="INTP"> INTP </option>
+                                    <option value="ISFJ"> ISFJ </option>
+                                    <option value="ISFP"> ISFP </option>
+                                    <option value="ISTJ"> ISTJ </option>
+                                    <option value="ISTP"> ISTP </option>
+                                  </select>
+                                </div>
+                              </div>
+                              <hr>
+
+                              <br>
+                              <br>
+                              <div class="d-flex justify-content-center text-center">
+                                <div class="ENFJ_img_container" style="display:none;">
+                                  <h4>" The Giver / The Teacher"</h4>
+                                  <img src="../static/img/enfj.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ENFP_img_container" style="display:none;">
+                                  <h4>" The Champion / The Campaigner "</h4>
+                                  <img src="../static/img/enfp.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ENTJ_img_container" style="display:none;">
+                                  <h4>" The Field Marshal / The Commander "</h4>
+                                  <img src="../static/img/entj.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ENTP_img_container" style="display:none;">
+                                    <h4>" The Visionary/ The Debater "</h4>
+                                    <img src="../static/img/entp.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ESFJ_img_container" style="display:none;">
+                                    <h4>" The Provider/ The Consul "</h4>
+                                    <img src="../static/img/esfj.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ESFP_img_container" style="display:none;">
+                                    <h4>" The Performer/ The Entertainer "</h4>
+                                    <img src="../static/img/esfp.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ESTJ_img_container" style="display:none;">
+                                    <h4>" The Supervisor/ The Executive "</h4>
+                                    <img src="../static/img/estj.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ESTP_img_container" style="display:none;">
+                                    <h4>" The Doer/ The Entrepreneur "</h4>
+                                    <img src="../static/img/estp.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="INFJ_img_container" style="display:none;">
+                                    <h4>" The Counselor/ The Advocate "</h4>
+                                    <img src="../static/img/infj.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="INFP_img_container" style="display:none;">
+                                    <h4>" The Idealist/ The Mediator "</h4>
+                                    <img src="../static/img/infp.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="INTJ_img_container" style="display:none;">
+                                    <h4>" The Mastermind/ The Architect "</h4>
+                                    <img src="../static/img/intj.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="INTP_img_container" style="display:none;">
+                                    <h4>" The Thinker/ The Logician "</h4>
+                                    <img src="../static/img/intp.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ISFJ_img_container" style="display:none;">
+                                    <h4>" The Protector/ The Defender "</h4>
+                                    <img src="../static/img/isfj.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ISFP_img_container" style="display:none;">
+                                    <h4>" The Composer/ The Adventurer "</h4>
+                                    <img src="../static/img/isfp.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ISTJ_img_container" style="display:none;">
+                                    <h4>" The Inspector/ The Logistician "</h4>
+                                    <img src="../static/img/istj.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                                <div class="ISTP_img_container" style="display:none;">
+                                    <h4>" The Craftsman/ The Virtuoso "</h4>
+                                    <img src="../static/img/istp.svg" alt="none" width="350px" height="350px">
+                                </div>
+
+                              </div>
+                              
+
+                                                   
+
+                              <p class="text-center" id="ENFJ_desc" style="display:none;"> People with ENFJ personality characteristics are very aware of their environment. ENFJ personalities are friendly and polite, and they enjoy helping others, and working toward a shared goal. ENFJs are natural leaders, which explains why so many well-known politicians, coaches, and educators are ENFJs. <br><br><b style="text-decoration:underline;"> ENFJ stands for Extraversion, iNtuition, Feeling, and Judgment </b>  and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ENFJ The Giver / The Teacher because this group tends to help others, and ENFJs are one of the four oriented-idealist personality types. </b></p>
+                              <p class="text-center" id="ENFP_desc" style="display: none;"> ENFPs are people-centered creators who are energized by new ideas, people, and activities. ENFP personality types are known to be active, flexible, and innovative in their conduct. These MBTI types have a strong need for meaningful, emotional relationships with others. <br><br><b style="text-decoration:underline;"> ENFP stands for Extraversion, iNtuition, Feeling, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ENFP The Champion / The Campaigner because this group tends to help others, and ENFPs are one of the four oriented-idealist personality types. </b></p>
+                              
+                              <p class="text-center" id="ENTJ_desc" style="display: none;"> People of the ENTJ personality type are charming, straightforward, and rational in their actions. ENTJs are aggressive and love being in control; they perceive themselves as leaders and managers, managing people and procedures to attain their objectives. <br><br><b style="text-decoration:underline;"> ENTJ stands for Extraversion, iNtuition, Thinking, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ENTJ The Field Marshal / The Commander because their innate ability is to command and lead people. ENTJ is one of four personality types of The Rational. </b></p>
+                              <p class="text-center" id="ENTP_desc" style="display: none;"> The ENTP personality type is talkative, curious, and impulsive in their behavior. ENTPs are inspired by innovators who are compelled to provide novel solutions to cognitively challenging problems. These MBTI personalities are open-minded and unconventional, and they strive to investigate, comprehend, and influence others. <br><br><b style="text-decoration:underline;"> ENTP stands for Extraversion, iNtuition, Thinking, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ENTP The Visionary/ The Debater because they are very passionate about coming up with new ideas. ENTP is one of four personality types of The Rational. </b></p>
+                              
+                              <p class="text-center" id="ESFJ_desc" style="display: none;">The ESFJ MBTI type is recognized for being empathetic, warm-hearted, and sympathetic. They are very aware of their emotional environment and are sensitive to both others' feelings and others' opinions of them. <br><br><b style="text-decoration:underline;"> ESFJ stands for Extraversion, Sensing, Feeling, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ESFJ The Provider/ The Consul because they are very interested in caring, protecting, and helping others in very practical ways, and ESFJ is one of the four personality types of The Guardian. </b></p>
+                              <p class="text-center" id="ESFP_desc" style="display: none;">People with the ESFP MBTI type act in a friendly and supportive manner. They frequently follow the flow of events. They like gatherings and are often the focus of attention. <br><br><b style="text-decoration:underline;"> ESFP stands for Extraversion, Sensing, Feeling, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey labeled ESFP group The Performer/ The Entertainer because they have a bright and energetic nature, and ESFP is one of the four personality types of The Artisan. </b></p>
+                              
+                              <p class="text-center" id="ESTJ_desc" style="display: none;">People of the ESTJ personality type are recognized for their organizational skills, loyalty, and hard work. They value dependability and prefer that events occur in a logical order. ESTJs are orderly, principle, and conscientious individuals who like to do tasks in a methodical, rational way. <br><br><b style="text-decoration:underline;"> ESTJ stands for Extraversion, Sensing, Thinking, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ESTJ The Supervisor/ The Executive because they tend to be responsible and make sure everything is done correctly. ESTJ is one of the four personality types of The Guardian. </b></p>
+                              <p class="text-center" id="ESTP_desc" style="display: none;">People with the ESTP MBTI personality type are recognized for their bright, active, and adventurous behavior. ESTPs are high-energy thrill seekers who thrive on putting out actual or metaphorical fires. Although they appear to be very social, they are rarely sensitive; the ESTP prefers fast-paced and humorous situations to emotional or serious ones. <br><br><b style="text-decoration:underline;"> ESTP stands for Extraversion, Sensing, Thinking, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ESTP The Doer/ The Entrepreneur because their goal is to convey their self-worth and ideas to others. ESTP is one of the 4 personality types of The Artisan. </b> </p>
+                              
+                              <p class="text-center" id="INFJ_desc" style="display: none;">Individuals with the INFJ MBTI personality type are determined, reserved, and altruistic in their behavior. They are idealists with a strong desire to improve the world. They like personal relationships with a few people but prefer to work alone most of the time. INFJs are also nurturing creatives with a strong sense of personal integrity and a desire to help others attain their full potential. <br><br><b style="text-decoration:underline;"> INFJ stands for Introversion, iNtuition, Feeling, and Judgment </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named INFJ The Counselor/ The Advocate because they are very good at giving instructions and INFJ is one of the 4 personality types of an Idealist group. </b></p>
+                              <p class="text-center" id="INFP_desc" style="display: none;">INFP personalities are cautious, idealistic, and flexible in their conduct. They are inquisitive individuals that are always preoccupied with their thoughts. INFPs are sensitive, compassionate, and empathic, and they are genuinely concerned with their own and others' personal growth. <br><br><b style="text-decoration:underline;"> INFP stands for Introversion, iNtuition, Feeling, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named INFP The Idealist/ The Mediator because they tend to be sympathetic, selfless, and deeply compassionate to help others, and INFP is one of the four personality types of the Idealist group. </b></p>
+                              
+                              <p class="text-center" id="INTJ_desc" style="display: none;">Individuals of the INTJ personality type are confident, analytical, and ambitious in their behaviors. They are very logical and have a great desire to learn. MBTI types are typically autonomous and selective in their relationships, preferring to connect with intellectually fascinating people. <br><br><b style="text-decoration:underline;"> INTJ stands for Introversion, iNtuition, Thinking, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named INTJ The Mastermind/ The Architect because they have logical thoughts and masterful strategies. INTJ is one of the four personality types of The Rational group. </b></p>
+                              <p class="text-center" id="INTP_desc" style="display: none;">INTP MBTI personalities are analytical, objective, and reasonable in their behavior. They spend a lot of time in their heads, researching topics, making connections, and attempting to figure out how things work. They like researching new theories and ideas, thus they are usually responsible for significant breakthroughs in their chosen field. <br><br><b style="text-decoration:underline;"> INTP stands for Introversion, iNtuition, Thinking, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named INTP The Thinker/ The Logician because of their intuitive understanding of complex systems. INTP is one of the four personality types of The Rational. </b> </p>
+                              
+                              <p class="text-center" id="ISFJ_desc" style="display: none;">ISFJ MBTI types are generally modest, industrious, and enthusiastic. They are usually concerned with completing a task flawlessly and prefer to work methodically. They are meticulous and methodical, and they will not give up until the work is finished. <br><br><b style="text-decoration:underline;"> ISFJ stands for Introversion, Sensing, Feeling, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ISFJ The Protector/ The Defender because they are very interested in caring, protecting, and helping others in very practical ways and ISFJ is one of the four personality types of The Guardian. </b></p>
+                              <p class="text-center" id="ISFP_desc" style="display: none;">ISFPs are humble and quiet, yet they are also warm and gregarious, eager to share their experiences with others. ISFPs have an acute sense of beauty and seek it out in their surroundings. They are very sensitive to sensory inputs and often have a natural talent for the arts. <br><br><b style="text-decoration:underline;"> ISFP stands for Introversion, Sensing, Feeling, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ISFP The Composer/ The Adventurer because they have an innate sensitivity to creating works of art. ISFP is one of four personality types of The Artisan. </b> </p>
+                              
+                              <p class="text-center" id="ISTJ_desc" style="display: none;">ISTJs are the professional organizers that are motivated by systems and institutions to build and preserve order. They are trustworthy and obedient, interested with maintaining social order and upholding standards. They like to be alone or in small groups of close friends, and they may be quiet and reserved in large groups. <br><br><b style="text-decoration:underline;"> ISTJ stands for Introversion, Sensing, Thinking, and Judgement </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ISTJ The Inspector/ The Logistician because they place great emphasis on the small details and precision of doing something. ISTJ is one of the four personality types of The Guardian. </b></p>
+                              <p class="text-center" id="ISTP_desc" style="display: none;">ISTPs are skilled artisans who like debugging and understand mechanics. They approach their environment with a flexible logic, looking for genuine solutions to the problems they face. They are self-sufficient and adaptable, and they interact with their environment in a self-directed, chaotic manner. <br><br><b style="text-decoration:underline;"> ISTP stands for Introversion, Sensing, Thinking, and Perception </b> and is one of 16 personality types studied from the MBTI test (Myers-Briggs Type Indicator). The MBTI personality assessment developed by Isabel Briggs Myers, Katharine Cook Briggs, and David Keirsey from the work of psychiatrist Carl G. Jung, the types of psychology based on theories of cognitive functions. <br><br><b> Keirsey named ISTP The Craftsman/ The Virtuoso because they have innate mechanical ability and can easily use tools or equipment. ISTP is one of the four personality types of The Artisan. </b></p>
+
+                              <br>
+                              <br>
+                  
+                              <hr>
+                              
+                              <div class="row">
+                                <div class="col-sm-12 d-flex justify-content-center">
+                                    
+                                  <button type="submit" name="submit" class="btn btn-success ">Submit</button>
+                                   
+                                </div>
+                              </div>
+                        </form>
+                      
+                    </div>
+                  </div>
+    
+                 
+                </div>
+                
+              </div>
+            </div>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+        $('#personality').change(function(){
+          if($(this).val()==="ENFJ"){
+            $('.ENFJ_img_container').show();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').show();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ENFP"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').show();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').show();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ENTJ"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').show();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').show();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ENTP"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').show();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').show();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ESFJ"){
+
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').show();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').show();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ESFP"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').show();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').show();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ESTJ"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').show();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').show();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ESTP"){
+
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').show();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').show();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="INFJ"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').show();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').show();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="INFP"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').show();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').show();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="INTJ"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').show();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').show();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="INTP"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').show();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').show();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ISFJ"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').show();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').show();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ISFP"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').show();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').show();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ISTJ"){
+
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').show();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').show();
+            $('#ISTP_desc').hide();
+          }
+          else if ($(this).val()==="ISTP"){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').show();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').show();
+          }
+
+          else if($(this).val()===""){
+            $('.ENFJ_img_container').hide();
+            $('.ENFP_img_container').hide();
+            $('.ENTJ_img_container').hide();
+            $('.ENTP_img_container').hide();
+            $('.ESFJ_img_container').hide();
+            $('.ESFP_img_container').hide();
+            $('.ESTJ_img_container').hide();
+            $('.ESTP_img_container').hide();
+            
+            $('.INFJ_img_container').hide();
+            $('.INFP_img_container').hide();
+            $('.INTJ_img_container').hide();
+            $('.INTP_img_container').hide();
+            $('.ISFJ_img_container').hide();
+            $('.ISFP_img_container').hide();
+            $('.ISTJ_img_container').hide();
+            $('.ISTP_img_container').hide();
+
+            $('#ENFJ_desc').hide();
+            $('#ENFP_desc').hide();
+            $('#ENTJ_desc').hide();
+            $('#ENTP_desc').hide();
+            $('#ESFJ_desc').hide();
+            $('#ESFP_desc').hide();
+            $('#ESTJ_desc').hide();
+            $('#ESTP_desc').hide();
+
+            $('#INFJ_desc').hide();
+            $('#INFP_desc').hide();
+            $('#INTJ_desc').hide();
+            $('#INTP_desc').hide();
+            $('#ISFJ_desc').hide();
+            $('#ISFP_desc').hide();
+            $('#ISTJ_desc').hide();
+            $('#ISTP_desc').hide();
+        }
+
+        }).change();
+    </script>
+
+    <script>
+      var loader =  document.getElementById("preloader");
+      window.addEventListener("load", function(){
+          loader.style.display = "none";
+      })
+    </script>
+    
+</body>
+</html>
