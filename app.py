@@ -77,70 +77,127 @@ def login():
         session['no_predicted_studs_result_10_CS'] = predicted_studs_result_10_CS
         session['no_predicted_studs_data_10_CS'] = predicted_studs_data_10_CS
 
+        registered_teachers_result_10 = cursor.execute('SELECT * FROM users WHERE userType = "teacher" ORDER BY id DESC LIMIT 10')
+        registered_teachers_data_10 = cursor.fetchall()
+
+        registered_teachers_result = cursor.execute('SELECT * FROM users WHERE userType = "teacher"')
+        registered_teachers_data = cursor.fetchall()
+
+        session['no_teachers'] = registered_teachers_result
+        session['no_registered_teachers_data_10'] = registered_teachers_data_10
+
         if user_record > 0:
+            #uncomment when this when creating new admin user acc.
+            # if user['userType'] == 'admin':
+                 #Use this when inserting a new admin user account on the db to hash the password
+                 #hash_password = sha256_crypt.hash(user['password'])
+            #     d1 = datetime.datetime.now()
+            #     AY = ""
+            #     if d1.month >= 7 and d1.month <= 12:
+            #         AY = str(d1.year) + "-" + str(d1.year + 1) 
+            #     elif d1.month >= 1 and d1.month <= 6:
+            #         AY = str(d1.year - 1) + "-" + str(d1.year)
+            #     cursor.execute('UPDATE users SET AY = % s, password = % s WHERE userType = % s ', (AY, hash_password, 'admin', ))
+            #     mysql.connection.commit()
+            #     session['loggedin'] = True
+            #     loggedin = True
+            #     session['userid'] = user['id']
+            #     session['lastName'] = user['lastName']
+            #     session['firstName'] = user['firstName']
+            #     session['email'] = user['email']
+            #     session['program'] = user['program']
+            #     mesage = 'Logged in successfully !'
+            #     cursor.close()
+            #     return render_template('admin/dashboard_admin.html', loggedin=loggedin, mesage = mesage) 
+
             if sha256_crypt.verify(password, user['password']):
-                if user_record == 1:
-                    if user['userType'] == 'student':
-                        session['loggedin'] = True
-                        loggedin = True
-                        session['userid'] = user['id']
-                        session['lastName'] = user['lastName']
-                        session['firstName'] = user['firstName']
-                        session['email'] = user['email']
-                        session['program'] = user['program']
-                        session['section'] = user['section']
-                        mesage = 'Logged in successfully !'
+                if user['status'] == "activated": 
+                    if user_record == 1:
+                        if user['userType'] == 'student':
+                            session['loggedin'] = True
+                            loggedin = True
+                            session['userid'] = user['id']
+                            session['lastName'] = user['lastName']
+                            session['firstName'] = user['firstName']
+                            session['email'] = user['email']
+                            session['program'] = user['program']
+                            session['section'] = user['section']
+                            mesage = 'Logged in successfully !'
 
-                        cursor.execute('SELECT * FROM predict WHERE userID = % s', (user['id'], ))
-                        record = cursor.fetchone()
-                        
-                        if record:
-                            has_record = True
-                            m_prediction = record['MAIN_ROLE']
-                            s_prediction = record['SECOND_ROLE']
+                            cursor.execute('SELECT * FROM predict WHERE userID = % s', (user['id'], ))
+                            record = cursor.fetchone()
+                            
+                            if record:
+                                has_record = True
+                                m_prediction = record['MAIN_ROLE']
+                                s_prediction = record['SECOND_ROLE']
 
-                            if m_prediction == 0:
-                                m_prediction = 'Lead Programmer'
-                            elif m_prediction == 1:
-                                m_prediction = 'Project Manager'
-                            elif m_prediction == 2:
-                                m_prediction = 'UI/UX Designer'
-                            elif m_prediction == 3:
-                                m_prediction = 'Quality Assurance Engineer'
-                            elif m_prediction == 4:
-                                m_prediction = 'Business Analyst'
-                            
-                            if s_prediction == 0:
-                                s_prediction = 'Lead Programmer'
-                            elif s_prediction == 1:
-                                s_prediction = 'Project Manager'
-                            elif s_prediction == 2:
-                                s_prediction = 'UI/UX Designer'
-                            elif s_prediction == 3:
-                                s_prediction = 'Quality Assurance Engineer'
-                            elif s_prediction == 4:
-                                s_prediction = 'Business Analyst'
-                            elif s_prediction == 5:
-                                s_prediction = 'NONE'
-                            
+                                if m_prediction == 0:
+                                    m_prediction = 'Lead Programmer'
+                                elif m_prediction == 1:
+                                    m_prediction = 'Project Manager'
+                                elif m_prediction == 2:
+                                    m_prediction = 'UI/UX Designer'
+                                elif m_prediction == 3:
+                                    m_prediction = 'Quality Assurance Engineer'
+                                elif m_prediction == 4:
+                                    m_prediction = 'Business Analyst'
+                                
+                                if s_prediction == 0:
+                                    s_prediction = 'Lead Programmer'
+                                elif s_prediction == 1:
+                                    s_prediction = 'Project Manager'
+                                elif s_prediction == 2:
+                                    s_prediction = 'UI/UX Designer'
+                                elif s_prediction == 3:
+                                    s_prediction = 'Quality Assurance Engineer'
+                                elif s_prediction == 4:
+                                    s_prediction = 'Business Analyst'
+                                elif s_prediction == 5:
+                                    s_prediction = 'NONE'
+                                
+                                cursor.close()
+                                return render_template('student/dashboard_student.html', loggedin=loggedin, mesage = mesage, has_record=has_record, main_role=m_prediction, second_role=s_prediction)
+                            else:
+                                has_record = False
+                                cursor.close()
+                                return render_template('student/dashboard_student.html', loggedin=loggedin, mesage = mesage, has_record=has_record)
+                        elif user['userType'] == 'teacher':
+                            no = 0   
+                            session['loggedin'] = True
+                            loggedin = True
+                            session['userid'] = user['id']
+                            session['lastName'] = user['lastName']
+                            session['firstName'] = user['firstName']
+                            session['email'] = user['email']
+                            session['program'] = user['program']
+                            mesage = 'Logged in successfully !'
                             cursor.close()
-                            return render_template('student/dashboard_student.html', loggedin=loggedin, mesage = mesage, has_record=has_record, main_role=m_prediction, second_role=s_prediction)
-                        else:
-                            has_record = False
+                            return render_template('teacher/dashboard_teacher.html', loggedin=loggedin, mesage = mesage) 
+                        elif user['userType'] == 'admin':
+                            d1 = datetime.datetime.now()
+                            AY = ""
+                            if d1.month >= 7 and d1.month <= 12:
+                                AY = str(d1.year) + "-" + str(d1.year + 1) 
+                            elif d1.month >= 1 and d1.month <= 6:
+                                AY = str(d1.year - 1) + "-" + str(d1.year)
+                            
+                            cursor.execute('UPDATE users SET AY = % s WHERE userType = % s ', (AY, 'admin', ))
+                            mysql.connection.commit()
+
+                            session['loggedin'] = True
+                            loggedin = True
+                            session['userid'] = user['id']
+                            session['lastName'] = user['lastName']
+                            session['firstName'] = user['firstName']
+                            session['email'] = user['email']
+                            session['program'] = user['program']
+                            mesage = 'Logged in successfully !'
                             cursor.close()
-                            return render_template('student/dashboard_student.html', loggedin=loggedin, mesage = mesage, has_record=has_record)
-                    elif user['userType'] == 'teacher':
-                        no = 0   
-                        session['loggedin'] = True
-                        loggedin = True
-                        session['userid'] = user['id']
-                        session['lastName'] = user['lastName']
-                        session['firstName'] = user['firstName']
-                        session['email'] = user['email']
-                        session['program'] = user['program']
-                        mesage = 'Logged in successfully !'
-                        cursor.close()
-                        return render_template('teacher/dashboard_teacher.html', loggedin=loggedin, mesage = mesage) 
+                            return render_template('admin/dashboard_admin.html', loggedin=loggedin, mesage = mesage) 
+                elif user['status'] == "deactivated":
+                    mesage = 'Your account is still deactivated, kindly ask the admin to activate your account!'
+                    return render_template('index.html', mesage = mesage)
             else:
                 mesage = 'Email or Password is incorrect!'
 
@@ -733,40 +790,138 @@ def result_predict():
 
 @app.route('/dashboard_teacher')
 def dashboard_teacher():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    registered_studs_result = cursor.execute('SELECT * FROM users WHERE userType = "student"')
+    registered_studs_data = cursor.fetchall()
 
+    registered_studs_result_10 = cursor.execute('SELECT * FROM users WHERE userType = "student" ORDER BY id DESC LIMIT 10')
+    registered_studs_data_10 = cursor.fetchall()
+
+    session['no_registered_studs_result'] = registered_studs_result
+    session['no_registered_studs_data_10'] = registered_studs_data_10
+
+    predicted_studs_result_IT = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 0')
+    predicted_studs_data_IT = cursor.fetchall()
+    session['no_predicted_studs_result_IT'] = predicted_studs_result_IT
+    session['no_predicted_studs_data_IT'] = predicted_studs_data_IT
+
+    predicted_studs_result_CS = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID  WHERE predict.program = 1')
+    predicted_studs_data_CS = cursor.fetchall()
+    session['no_predicted_studs_result_CS'] = predicted_studs_result_CS
+    session['no_predicted_studs_data_CS'] = predicted_studs_data_CS
+
+    predicted_studs_result_10_IT = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 0 ORDER BY predict.id DESC LIMIT 10')
+    predicted_studs_data_10_IT = cursor.fetchall()
+    session['no_predicted_studs_result_10_IT'] = predicted_studs_result_10_IT
+    session['no_predicted_studs_data_10_IT'] = predicted_studs_data_10_IT
+
+    predicted_studs_result_10_CS = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 1 ORDER BY predict.id DESC LIMIT 10')
+    predicted_studs_data_10_CS = cursor.fetchall()
+    session['no_predicted_studs_result_10_CS'] = predicted_studs_result_10_CS
+    session['no_predicted_studs_data_10_CS'] = predicted_studs_data_10_CS
+
+    cursor.close()
+    return render_template('teacher/dashboard_teacher.html')
+
+#admin
+
+@app.route('/students_records/student_profile', methods=['GET', 'POST'])
+def a_view_student():
+    if request.method == 'POST'  and 's_record' in request.form and 'userID' in request.form:
+        userID = request.form['userID'] 
+        student_records_page = request.form['s_record']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        registered_studs_result = cursor.execute('SELECT * FROM users WHERE userType = "student"')
-        registered_studs_data = cursor.fetchall()
+        cursor.execute('SELECT * FROM users WHERE id = % s', (userID,))
+        user = cursor.fetchone()
 
-        registered_studs_result_10 = cursor.execute('SELECT * FROM users WHERE userType = "student" ORDER BY id DESC LIMIT 10')
-        registered_studs_data_10 = cursor.fetchall()
+        session['loggedin'] = True
+        loggedin = True
+        session['userid'] = user['id']
+        session['lastName'] = user['lastName']
+        session['firstName'] = user['firstName']
+        session['email'] = user['email']
+        session['program'] = user['program']
+        session['section'] = user['section']
 
-        session['no_registered_studs_result'] = registered_studs_result
-        session['no_registered_studs_data_10'] = registered_studs_data_10
-
-        predicted_studs_result_IT = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 0')
-        predicted_studs_data_IT = cursor.fetchall()
-        session['no_predicted_studs_result_IT'] = predicted_studs_result_IT
-        session['no_predicted_studs_data_IT'] = predicted_studs_data_IT
-
-        predicted_studs_result_CS = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID  WHERE predict.program = 1')
-        predicted_studs_data_CS = cursor.fetchall()
-        session['no_predicted_studs_result_CS'] = predicted_studs_result_CS
-        session['no_predicted_studs_data_CS'] = predicted_studs_data_CS
-
-        predicted_studs_result_10_IT = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 0 ORDER BY predict.id DESC LIMIT 10')
-        predicted_studs_data_10_IT = cursor.fetchall()
-        session['no_predicted_studs_result_10_IT'] = predicted_studs_result_10_IT
-        session['no_predicted_studs_data_10_IT'] = predicted_studs_data_10_IT
-
-        predicted_studs_result_10_CS = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 1 ORDER BY predict.id DESC LIMIT 10')
-        predicted_studs_data_10_CS = cursor.fetchall()
-        session['no_predicted_studs_result_10_CS'] = predicted_studs_result_10_CS
-        session['no_predicted_studs_data_10_CS'] = predicted_studs_data_10_CS
+        is_predict = cursor.execute('SELECT * FROM predict WHERE predict.userID = % s', (session['userid'], ))
+        user_roles = cursor.fetchone()
 
         cursor.close()
-        return render_template('teacher/dashboard_teacher.html')
+        return render_template('admin/view_student.html', student_records_page=student_records_page, user_roles=user_roles, is_predict=is_predict)
 
+    return render_template('admin/view_student.html', student_records_page=student_records_page, user_roles=user_roles, is_predict=is_predict)
+
+@app.route('/teachers_records/teacher_profile', methods=['GET', 'POST'])
+def a_view_teacher():
+    if request.method == 'POST'  and 't_record' in request.form and 'userID' in request.form:
+        userID = request.form['userID'] 
+        teacher_records_page = request.form['t_record']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM users WHERE id = % s', (userID,))
+        user = cursor.fetchone()
+
+        session['loggedin'] = True
+        loggedin = True
+        session['userid'] = user['id']
+        session['lastName'] = user['lastName']
+        session['firstName'] = user['firstName']
+        session['email'] = user['email']
+        session['status'] = user['status']
+       
+        cursor.close()
+        return render_template('admin/view_teacher.html', teacher_records_page=teacher_records_page)
+
+    return render_template('admin/view_teacher.html', teacher_records_page=teacher_records_page)
+
+@app.route('/dashboard_admin')
+def dashboard_admin():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    registered_studs_result = cursor.execute('SELECT * FROM users WHERE userType = "student"')
+    registered_studs_data = cursor.fetchall()
+
+    registered_teachers_result = cursor.execute('SELECT * FROM users WHERE userType = "teacher"')
+    registered_teachers_data = cursor.fetchall()
+
+    registered_studs_result_10 = cursor.execute('SELECT * FROM users WHERE userType = "student" ORDER BY id DESC LIMIT 10')
+    registered_studs_data_10 = cursor.fetchall()
+
+    registered_teachers_result_10 = cursor.execute('SELECT * FROM users WHERE userType = "teacher" ORDER BY id DESC LIMIT 10')
+    registered_teachers_data_10 = cursor.fetchall()
+
+    session['no_registered_studs_result'] = registered_studs_result
+    session['no_registered_studs_data_10'] = registered_studs_data_10
+
+    session['no_teachers'] = registered_teachers_result
+    session['no_registered_teachers_data_10'] = registered_teachers_data_10
+
+    cursor.close()
+    return render_template('admin/dashboard_admin.html')
+
+@app.route('/dashboard_admin/teacher/activate', methods=['GET', 'POST'])
+def activate():
+    userID = request.form['userID']
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('UPDATE users SET status = % s WHERE id = % s AND userType = % s', ('activated', userID, 'teacher', ))
+    mysql.connection.commit()
+
+    flash("The account has been successfully activated!")
+    mes_s = "The account has been successfully activated!"
+    cursor.close()
+    # return render_template('admin/teachers_records.html', mes_s=mes_s)
+    return redirect(url_for('teachers_records'))
+
+@app.route('/dashboard_admin/teacher/deactivate', methods=['GET', 'POST'])
+def deactivate():
+    userID = request.form['userID']
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('UPDATE users SET status = % s WHERE id = % s AND userType = % s', ('deactivated', userID, 'teacher', ))
+    mysql.connection.commit()
+
+    flash("The account has been successfully deactivated!")
+    mes_s = "The account has been successfully deactivated!"
+    cursor.close()
+    # return render_template('admin/teachers_records.html', mes_s=mes_s)
+    return redirect(url_for('teachers_records'))
 
 @app.route('/groupings_CS/group_result')
 def groupings_CS_result():
@@ -8682,6 +8837,22 @@ def student_records():
     cursor.close()
     return render_template('teacher/student_records.html', student=student)
 
+@app.route('/students_records')
+def students_records():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    result = cursor.execute("SELECT users.id, users.AY, users.firstName, users.lastName, users.section, users.program FROM users WHERE users.userType = 'student' ORDER BY users.id DESC")
+    students = cursor.fetchall()
+    cursor.close()
+    return render_template('admin/students_records.html', students=students)
+
+@app.route('/teachers_records')
+def teachers_records():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    result = cursor.execute("SELECT users.id, users.AY, users.firstName, users.lastName, users.email, users.status FROM users WHERE users.userType = 'teacher' ORDER BY users.id DESC")
+    teachers = cursor.fetchall()
+    cursor.close()
+    return render_template('admin/teachers_records.html', teachers=teachers)
+
 @app.route('/logout')
 def logout():
     session.pop('loggedin', None)
@@ -8719,6 +8890,13 @@ def register():
         section = request.form['section']
         program = request.form['program']
         userType = request.form['userType']
+        status = ""
+
+        if userType == "student":
+            status = "activated"
+        elif userType == "teacher":
+            status = "deactivated"
+
         d1 = datetime.datetime.now()
         AY = ""
         
@@ -8740,11 +8918,11 @@ def register():
             mesage = 'Please fill out the form !'
         else:
             if userType == 'student':
-                cursor.execute('INSERT INTO users (AY, userType, firstName, lastName, email, password, section, program) VALUES (% s, % s, % s, % s, % s, % s, % s, % s)', (AY, userType, firstName, lastName, email, hash_password, section, program,))
+                cursor.execute('INSERT INTO users (AY, userType, firstName, lastName, email, password, section, program, status) VALUES (% s, % s, % s, % s, % s, % s, % s, % s, % s)', (AY, userType, firstName, lastName, email, hash_password, section, program, status,))
                 mysql.connection.commit()
                 mesage = 'You have successfully registered!'
             else:
-                cursor.execute('INSERT INTO users (AY, userType, firstName, lastName, email, password) VALUES (% s, % s, % s, % s, % s, % s)', (AY, userType, firstName, lastName, email, hash_password,))
+                cursor.execute('INSERT INTO users (AY, userType, firstName, lastName, email, password, status) VALUES (% s, % s, % s, % s, % s, % s, % s)', (AY, userType, firstName, lastName, email, hash_password, status,))
                 mysql.connection.commit()
                 mesage = 'You have successfully registered!'
 
@@ -8758,7 +8936,7 @@ def register():
 #change the mode when you want to run the flask app on development server or production server.
 #mode = "prod" or mode = "dev"
 
-mode = "prod"
+mode = "dev"
 
 if __name__ == "__main__":
     if mode == "dev":

@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loading.css') }}">
-    <title>Student Records</title>
+    <title>Students Records</title>
 
 </head>
 <body>
@@ -21,28 +21,23 @@
 
     <div class="sidebar">
         <div class="sidebar-brand">
-            <h2><span class="las la-user-tie"></span> <span>INSTRUCTOR</span></h2>
+            <h2><span class="las la-user-tie"></span> <span>ADMIN</span></h2>
         </div>
         <div class="sidebar-menu">
         <ul>    
                 <li>
-                    <a href="{{ url_for('dashboard_teacher') }}"><span class="las la-home"></span>
+                    <a href="{{ url_for('dashboard_admin') }}"><span class="las la-home"></span>
                     <span>Home</span></a>
                 </li>
 
                 <li>
                     <a class="active"><span class="las la-users"></span>
-                    <span>Student Records</span></a>
+                    <span>Students' Records</span></a>
                 </li>
 
                 <li>
-                    <a href="{{ url_for('groupings_IT') }}"><span class="las la-users-cog"></span>
-                    <span>Groupings (BSIT)</span></a>
-                </li>
-
-                <li>
-                    <a href="{{ url_for('groupings_CS') }}"><span class="las la-users-cog"></span>
-                    <span>Groupings (BSCS)</span></a>
+                    <a href="{{ url_for('teachers_records') }}"><span class="las la-users"></span>
+                    <span>Teachers' Records</span></a>
                 </li>
                 
             </ul>
@@ -55,7 +50,7 @@
                 <label for="nav-toggle">
                     <span class="las la-bars"></span>
                 </label>
-                Student Records (registered students)
+                Students' Records (registered students)
             </h2>
             <button style="border: none;background-color: #fff;" type="button"  data-bs-toggle="modal" data-bs-target="#logoutModal">
                 <span class="las la-sign-out-alt"></span> <span>Logout</span>
@@ -76,18 +71,18 @@
                       
                                 <th></th>
                             </tr>
+
                             <tr>
                                 <th>Academic Year</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Section</th>
-                                <th>Program</th>          
-                      
-                                <th></th>
+                                <th>Program</th>
+                                <th></th>          
                             </tr>
                         </thead>
                         <tbody >
-                            {% for row in student %}
+                            {% for row in students %}
                             <tr>
                                 <td> {{row.AY}}</td>
                                 <td> {{row.firstName}}</td>
@@ -98,7 +93,7 @@
             
 
                                 <td>
-                                    <form action="{{ url_for ('view_student') }}" method="POST">
+                                    <form action="{{ url_for ('a_view_student') }}" method="POST">
                                         <input type="text" name="s_record" value="true" hidden>
                                         <input type="text" name="userID" value="{{row.id}}" hidden>
                                         <button type="submit" name="submit" class="btn btn-info"><i class="las la-search"></i> view</button>
@@ -107,6 +102,7 @@
                                 </td>
                             </tr>
                             {% endfor %}
+                            
                         </tbody>
                         <tfoot>
                             <tr>
@@ -114,8 +110,8 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Section</th>
-                                <th>Program</th>
-                                <th> </th>          
+                                <th>Program</th> 
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table>

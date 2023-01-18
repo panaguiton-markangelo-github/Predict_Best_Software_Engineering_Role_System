@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard_stud.css') }}">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loading.css') }}">
+
+    <title>Home</title>
+
+</head>
+<body>
+    <div id="preloader">
+	</div>
+    <input type="checkbox" id="nav-toggle">
+
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h2><span class="las la-user-tie"></span> <span>ADMIN</span></h2>
+        </div>
+        <div class="sidebar-menu">
+        <ul>    
+                <li>
+                    <a class="active"><span class="las la-home"></span>
+                    <span>Home</span></a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('students_records') }}"><span class="las la-users"></span>
+                    <span>Students' Records</span></a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('teachers_records') }}"><span class="las la-users"></span>
+                    <span>Teachers' Records</span></a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>
+                <label for="nav-toggle">
+                    <span class="las la-bars"></span>
+                </label>
+                Home
+            </h2>
+            <button style="border: none;background-color: #fff;" type="button"  data-bs-toggle="modal" data-bs-target="#logoutModal">
+                <span class="las la-sign-out-alt"></span> <span>Logout</span>
+            </button>
+        </header>
+
+
+        <main>
+           <div class="container">
+            <h4>Welcome Admin!</h4>
+            <div class="cards">
+                <div class="card-single">
+                    <div style="color: white;">
+                        Total registered student/s : {{session.no_registered_studs_result}}
+                        
+                    </div>
+                    <div>
+                        <span class="las la-users"></span>
+                    </div>
+                </div>
+
+                <div style="background-color: #033a22;" class="card-single">
+                    <div style="color: white; ">
+                        Total registered teacher/s: {{session.no_teachers}} 
+                    </div>
+                    <div>
+                        <span style="color: white;" class="las la-users-cog"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tem-grid">
+                <div class="registered_users">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Registered Students</h3>
+                            <a href="{{ url_for('students_records') }}">See all <span class="las la-arrow-right"></span></a>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive-cus">
+                                <table width="100%">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <td>A.Y.</td>
+                                            <td> First Name </td>
+                                            <td> Last Name </td>
+                                            <td> Section </td>
+                                            <td> Program</td>                                
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for row_ in session.no_registered_studs_data_10 %}
+                                        <tr>
+                                            
+                                            <td> {{row_.AY}} </td>
+                                            <td> {{row_.firstName}} </td>
+                                            <td> {{row_.lastName}} </td>
+                                            <td> {{row_.section}} </td>
+                                            <td> {{row_.program}} </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="predicted_IT">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Registered Teachers</h3>
+                            <a href="{{ url_for('teachers_records') }}">See all <span class="las la-arrow-right"></span></a>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive-cus">
+                                <table width="100%">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <td>A.Y.</td>
+                                            <td> First Name </td>
+                                            <td> Last Name </td>
+                                            <td> Email </td>  
+                                            <td> Status </td>                           
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for row_ in session.no_registered_teachers_data_10 %}
+                                        <tr>
+                                            
+                                            <td> {{row_.AY}} </td>
+                                            <td> {{row_.firstName}} </td>
+                                            <td> {{row_.lastName}} </td>
+                                            <td> {{row_.email}} </td>
+                                            <td> {{row_.status}} </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           </div>
+        </main>
+    </div>
+
+    <!-- logout -->
+    <div class="modal fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="logoutModalLabel">Logout</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body">
+            <h5 class="text-center"> Do you wish to logout?</h5>
+            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                <a href="{{ url_for('logout') }}" class="btn btn-success">Yes</a>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/sweet_alert.js') }} "></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+
+    {% if loggedin is defined and loggedin %}
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Greetings!',
+                html: '<h4>Welcome! {{session.firstName}} {{session.lastName}}!</h4>',
+                showConfirmButton: true,
+                allowOutsideClick: false,
+                confirmButtonText: 'OKAY!'
+            });
+        </script>
+    {% endif %}
+
+    
+    <script>
+        var loader =  document.getElementById("preloader");
+        window.addEventListener("load", function(){
+            loader.style.display = "none";
+        })
+    </script>
+    
+</body>
+</html>
