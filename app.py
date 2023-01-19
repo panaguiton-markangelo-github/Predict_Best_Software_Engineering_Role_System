@@ -124,9 +124,15 @@ def login():
                             session['section'] = user['section']
                             mesage = 'Logged in successfully !'
 
-                            cursor.execute('SELECT * FROM predict WHERE userID = % s', (user['id'], ))
+                            #query the db to check if a student exceeds 3 attempts of prediction.
+                            preds = cursor.execute('SELECT * FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (user['id'], ))
                             record = cursor.fetchone()
-                            
+
+                            if preds == 0:
+                                preds_a = 0
+                            elif preds > 0:
+                                preds_a = record['attempt']
+                                                    
                             if record:
                                 has_record = True
                                 m_prediction = record['MAIN_ROLE']
@@ -157,11 +163,11 @@ def login():
                                     s_prediction = 'NONE'
                                 
                                 cursor.close()
-                                return render_template('student/dashboard_student.html', loggedin=loggedin, mesage = mesage, has_record=has_record, main_role=m_prediction, second_role=s_prediction)
+                                return render_template('student/dashboard_student.html', loggedin=loggedin, mesage = mesage, has_record=has_record, main_role=m_prediction, second_role=s_prediction, record=record, preds=preds_a)
                             else:
                                 has_record = False
                                 cursor.close()
-                                return render_template('student/dashboard_student.html', loggedin=loggedin, mesage = mesage, has_record=has_record)
+                                return render_template('student/dashboard_student.html', loggedin=loggedin, mesage = mesage, has_record=has_record, record=record, preds=preds_a)
                         elif user['userType'] == 'teacher':
                             no = 0   
                             session['loggedin'] = True
@@ -223,8 +229,8 @@ def view_profile():
     session['program'] = user['program']
     session['section'] = user['section']
 
-    is_predict = cursor.execute('SELECT * FROM predict WHERE predict.userID = % s', (session['userid'], ))
-    user_roles = cursor.fetchone()
+    is_predict = cursor.execute('SELECT * FROM predict WHERE predict.userID = % s ORDER BY id ASC', (session['userid'], ))
+    user_roles = cursor.fetchall()
 
     cursor.close()
     return render_template('student/view_profile.html', user_roles=user_roles, is_predict=is_predict)
@@ -247,8 +253,8 @@ def view_student():
         session['program'] = user['program']
         session['section'] = user['section']
 
-        is_predict = cursor.execute('SELECT * FROM predict WHERE predict.userID = % s', (session['userid'], ))
-        user_roles = cursor.fetchone()
+        is_predict = cursor.execute('SELECT * FROM predict WHERE predict.userID = % s ORDER BY id ASC', (userID, ))
+        user_roles = cursor.fetchall()
 
         cursor.close()
         return render_template('teacher/view_student.html', student_records_page=student_records_page, user_roles=user_roles, is_predict=is_predict)
@@ -361,9 +367,15 @@ def dashboard_student():
     session['program'] = user['program']
     session['section'] = user['section']
 
-    cursor.execute('SELECT * FROM predict WHERE userID = % s', (session['userid'], ))
+    preds = cursor.execute('SELECT * FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (session['userid'], ))
     record = cursor.fetchone()
     
+    if preds == 0:
+        preds_a = 0
+    elif preds > 0:
+        preds_a = record['attempt']
+        
+
     if record:
         has_record = True
         session['has_record'] = True
@@ -395,30 +407,30 @@ def dashboard_student():
             s_prediction = 'NONE'
         
         cursor.close()
-        return render_template('student/dashboard_student.html', has_record=has_record, main_role=m_prediction, second_role = s_prediction)
+        return render_template('student/dashboard_student.html', has_record=has_record, main_role=m_prediction, second_role = s_prediction, record=record, preds=preds_a)
     else: 
         has_record = False
         session['has_record'] = False
         cursor.close()
-        return render_template('student/dashboard_student.html', has_record=has_record)
+        return render_template('student/dashboard_student.html', has_record=has_record, record=record, preds=preds_a)
     
 @app.route('/dashboard_student_no_roles')
 def dashboard_student_no_roles():
     return render_template('student/dashboard_student.html')
     
 
-@app.route('/dashboard_student/start_repredict')
-def repredict():
-    session['repredict'] = True
-    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT predict.id, users.firstName, users.lastName FROM users INNER JOIN predict ON users.id = predict.userID WHERE predict.userID = % s', (session['userid'],))
-    del_user = cursor.fetchone()
+# @app.route('/dashboard_student/start_repredict')
+# def repredict():
+#     session['repredict'] = True
+#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+#     cursor.execute('SELECT predict.id, users.firstName, users.lastName FROM users INNER JOIN predict ON users.id = predict.userID WHERE predict.userID = % s', (session['userid'],))
+#     del_user = cursor.fetchone()
 
-    cursor.execute('DELETE FROM predict WHERE id = % s', (del_user['id'], ))
-    mysql.connection.commit()
+#     cursor.execute('DELETE FROM predict WHERE id = % s', (del_user['id'], ))
+#     mysql.connection.commit()
 
-    cursor.close()
-    return redirect(url_for('start'))
+#     cursor.close()
+#     return redirect(url_for('start'))
 
 @app.route('/dashboard_student/start', methods =['POST', 'GET'])
 def start():
@@ -462,16 +474,33 @@ def start():
         cursor.execute('SELECT program FROM users WHERE id = % s', (userID,))
         program = cursor.fetchone()
 
+        attempt_rec = cursor.execute('SELECT attempt FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (userID,))
+        attempt = cursor.fetchone()
+
+            
         if program['program'] == 'BSIT':
             f_program = 0
         elif program['program'] == 'BSCS':
             f_program = 1
 
         if request.method == 'POST'  and 'CC101' in request.form and 'CC102' in request.form  and 'ITC' in request.form  and 'IM' in request.form and 'OOP' in request.form  and 'HCI' in request.form and 'DSA' in request.form:
-             cursor.execute('INSERT INTO predict (userID, program, comprog1, comprog2, intro_computing, IM, OOP, HCI, DSA, comprog1_units, comprog2_units, intro_computing_units, IM_units, OOP_units, HCI_units, DSA_units, programming_avg, gpa) VALUES (% s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s )', (session['userid'], f_program, CC101, CC102, ITC, IM, OOP, HCI, DSA, CC101_units, CC102_units, ITC_units, IM_units, OOP_units, HCI_units, DSA_units, final_prog_avg, final_GPA, ))
-             mysql.connection.commit()
-             cursor.close()
-             return redirect(url_for('result_gpa'))
+            #fix here
+            if attempt_rec == 0:
+                attempt_count = 1
+                cursor.execute('INSERT INTO predict (userID, program, comprog1, comprog2, intro_computing, IM, OOP, HCI, DSA, comprog1_units, comprog2_units, intro_computing_units, IM_units, OOP_units, HCI_units, DSA_units, programming_avg, gpa, attempt) VALUES (% s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s)', (session['userid'], f_program, CC101, CC102, ITC, IM, OOP, HCI, DSA, CC101_units, CC102_units, ITC_units, IM_units, OOP_units, HCI_units, DSA_units, final_prog_avg, final_GPA, attempt_count, ))
+                mysql.connection.commit()
+            elif attempt['attempt'] == 1:
+                attempt_count = 2
+                cursor.execute('INSERT INTO predict (userID, program, comprog1, comprog2, intro_computing, IM, OOP, HCI, DSA, comprog1_units, comprog2_units, intro_computing_units, IM_units, OOP_units, HCI_units, DSA_units, programming_avg, gpa, attempt) VALUES (% s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s)', (session['userid'], f_program, CC101, CC102, ITC, IM, OOP, HCI, DSA, CC101_units, CC102_units, ITC_units, IM_units, OOP_units, HCI_units, DSA_units, final_prog_avg, final_GPA, attempt_count, ))
+                mysql.connection.commit()
+            elif attempt['attempt'] == 2:
+                attempt_count = 3
+                cursor.execute('INSERT INTO predict (userID, program, comprog1, comprog2, intro_computing, IM, OOP, HCI, DSA, comprog1_units, comprog2_units, intro_computing_units, IM_units, OOP_units, HCI_units, DSA_units, programming_avg, gpa, attempt) VALUES (% s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s, % s)', (session['userid'], f_program, CC101, CC102, ITC, IM, OOP, HCI, DSA, CC101_units, CC102_units, ITC_units, IM_units, OOP_units, HCI_units, DSA_units, final_prog_avg, final_GPA, attempt_count, ))
+                mysql.connection.commit()
+          
+
+            cursor.close()
+            return redirect(url_for('result_gpa'))
         else:
             mesage = 'Something went wrong!'
             cursor.close()
@@ -486,7 +515,7 @@ def start():
 def result_gpa():
     userID = session['userid']
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    student = cursor.execute('SELECT * FROM predict WHERE userID = % s', (userID,))
+    student = cursor.execute('SELECT * FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (userID,))
     grades = cursor.fetchone()
 
     if student > 0:
@@ -507,117 +536,120 @@ def result_gpa():
 @app.route('/dashboard_student/pt', methods =['POST', 'GET'])
 def pt():
     mesage = ''
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    attempt_rec = cursor.execute('SELECT attempt FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (session['userid'],))
+    attempt = cursor.fetchone()
     if request.method == 'POST'  and  'personality' in request.form :
         personality_type = request.form['personality']
         if personality_type == 'ENFJ':
             ENFJ = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ENFJ = % s WHERE userID = % s', (ENFJ, session['userid'], ))
+            cursor.execute('UPDATE predict SET ENFJ = % s WHERE userID = % s AND attempt = % s', (ENFJ, session['userid'], attempt['attempt'] ))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ENFP':
             ENFP = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ENFP = % s WHERE userID = % s', (ENFP, session['userid'], ))
+            cursor.execute('UPDATE predict SET ENFP = % s WHERE userID = % s AND attempt = % s', (ENFP, session['userid'], attempt['attempt'] ))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ENTJ':
             ENTJ = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ENTJ = % s WHERE userID = % s', (ENTJ, session['userid'], ))
+            cursor.execute('UPDATE predict SET ENTJ = % s WHERE userID = % s AND attempt = % s', (ENTJ, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ENTP':
             ENTP = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ENTP = % s WHERE userID = % s', (ENTP, session['userid'], ))
+            cursor.execute('UPDATE predict SET ENTP = % s WHERE userID = % s AND attempt = % s', (ENTP, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ESFJ':
             ESFJ = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ESFJ = % s WHERE userID = % s', (ESFJ, session['userid'], ))
+            cursor.execute('UPDATE predict SET ESFJ = % s WHERE userID = % s AND attempt = % s', (ESFJ, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ESFP':
             ESFP = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ESFP = % s WHERE userID = % s', (ESFP, session['userid'], ))
+            cursor.execute('UPDATE predict SET ESFP = % s WHERE userID = % s AND attempt = % s', (ESFP, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ESTJ':
             ESTJ = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ESTJ = % s WHERE userID = % s', (ESTJ, session['userid'], ))
+            cursor.execute('UPDATE predict SET ESTJ = % s WHERE userID = % s AND attempt = % s', (ESTJ, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ESTP':
             ESTP = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ESTP = % s WHERE userID = % s', (ESTP, session['userid'], ))
+            cursor.execute('UPDATE predict SET ESTP = % s WHERE userID = % s AND attempt = % s', (ESTP, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'INFJ':
             INFJ = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET INFJ = % s WHERE userID = % s', (INFJ, session['userid'], ))
+            cursor.execute('UPDATE predict SET INFJ = % s WHERE userID = % s AND attempt = % s', (INFJ, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'INFP':
             INFP = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET INFP = % s WHERE userID = % s', (INFP, session['userid'], ))
+            cursor.execute('UPDATE predict SET INFP = % s WHERE userID = % s AND attempt = % s', (INFP, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'INTJ':
             INTJ = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET INTJ = % s WHERE userID = % s', (INTJ, session['userid'], ))
+            cursor.execute('UPDATE predict SET INTJ = % s WHERE userID = % s AND attempt = % s', (INTJ, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'INTP':
             INTP = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET INTP = % s WHERE userID = % s', (INTP, session['userid'], ))
+            cursor.execute('UPDATE predict SET INTP = % s WHERE userID = % s AND attempt = % s', (INTP, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ISFJ':
             ISFJ = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ISFJ = % s WHERE userID = % s', (ISFJ, session['userid'], ))
+            cursor.execute('UPDATE predict SET ISFJ = % s WHERE userID = % s AND attempt = % s', (ISFJ, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ISFP':
             ISFP = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ISFP = % s WHERE userID = % s', (ISFP, session['userid'], ))
+            cursor.execute('UPDATE predict SET ISFP = % s WHERE userID = % s AND attempt = % s', (ISFP, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ISTJ':
             ISTJ = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ISTJ = % s WHERE userID = % s', (ISTJ, session['userid'], ))
+            cursor.execute('UPDATE predict SET ISTJ = % s WHERE userID = % s AND attempt = % s', (ISTJ, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
         elif personality_type == 'ISTP':
             ISTP = 1
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute('UPDATE predict SET ISTP = % s WHERE userID = % s', (ISTP, session['userid'], ))
+            cursor.execute('UPDATE predict SET ISTP = % s WHERE userID = % s AND attempt = % s', (ISTP, session['userid'], attempt['attempt']))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('mt'))
@@ -633,37 +665,40 @@ def pt():
 @app.route('/dashboard_student/mt', methods =['POST', 'GET'])
 def mt():
     mesage = ''
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    attempt_rec = cursor.execute('SELECT attempt FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (session['userid'],))
+    attempt = cursor.fetchone()
     if request.method == 'POST'  and  'mul_int' in request.form :
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         if request.form.getlist('mul_int'):
             MI_list = request.form.getlist('mul_int')
             if 'existential' in MI_list:  
-                cursor.execute('UPDATE predict SET EXISTENTIAL = % s WHERE userID = % s', (1, session['userid'], ))
+                cursor.execute('UPDATE predict SET EXISTENTIAL = % s WHERE userID = % s AND attempt = % s', (1, session['userid'], attempt['attempt']))
                 mysql.connection.commit()
             if 'interpersonal' in MI_list:  
-                cursor.execute('UPDATE predict SET INTERPERSONAL = % s WHERE userID = % s', (1, session['userid'], ))
+                cursor.execute('UPDATE predict SET INTERPERSONAL = % s WHERE userID = % s AND attempt = % s', (1, session['userid'], attempt['attempt']))
                 mysql.connection.commit()
             if 'intrapersonal' in MI_list:  
-                cursor.execute('UPDATE predict SET INTRAPERSONAL = % s WHERE userID = % s', (1, session['userid'], ))
+                cursor.execute('UPDATE predict SET INTRAPERSONAL = % s WHERE userID = % s AND attempt = % s', (1, session['userid'], attempt['attempt']))
                 mysql.connection.commit()
             if 'kinesthetic' in MI_list:  
-                cursor.execute('UPDATE predict SET KINESTHETIC = % s WHERE userID = % s', (1, session['userid'], ))
+                cursor.execute('UPDATE predict SET KINESTHETIC = % s WHERE userID = % s AND attempt = % s', (1, session['userid'], attempt['attempt']))
                 mysql.connection.commit()
             if 'logical' in MI_list:  
-                cursor.execute('UPDATE predict SET LOGICAL = % s WHERE userID = % s', (1, session['userid'], ))
+                cursor.execute('UPDATE predict SET LOGICAL = % s WHERE userID = % s AND attempt = % s', (1, session['userid'], attempt['attempt']))
                 mysql.connection.commit()
                 
             if 'musical' in MI_list:  
-                cursor.execute('UPDATE predict SET MUSICAL = % s WHERE userID = % s', (1, session['userid'], ))
+                cursor.execute('UPDATE predict SET MUSICAL = % s WHERE userID = % s AND attempt = % s', (1, session['userid'], attempt['attempt']))
                 mysql.connection.commit()
             if 'naturalistic' in MI_list:  
-                cursor.execute('UPDATE predict SET NATURALISTIC = % s WHERE userID = % s', (1, session['userid'], ))
+                cursor.execute('UPDATE predict SET NATURALISTIC = % s WHERE userID = % s AND attempt = % s', (1, session['userid'], attempt['attempt']))
                 mysql.connection.commit()
             if 'verbal' in MI_list:  
-                cursor.execute('UPDATE predict SET VERBAL = % s WHERE userID = % s', (1, session['userid'], ))
+                cursor.execute('UPDATE predict SET VERBAL = % s WHERE userID = % s AND attempt = % s', (1, session['userid'], attempt['attempt']))
                 mysql.connection.commit()
             if 'visual' in MI_list:  
-                cursor.execute('UPDATE predict SET VISUAL = % s WHERE userID = % s', (1, session['userid'], ))
+                cursor.execute('UPDATE predict SET VISUAL = % s WHERE userID = % s AND attempt = % s', (1, session['userid'], attempt['attempt']))
                 mysql.connection.commit()
             cursor.close()
             return redirect(url_for('result_predict'))
@@ -689,8 +724,11 @@ def result_predict():
     m_prediction = 0
     s_prediction = 0
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    cursor.execute('SELECT * FROM predict WHERE userID = % s', (session['userid'], ))
+    cursor.execute('SELECT * FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (session['userid'], ))
     predict_user = cursor.fetchone()
+
+    attempt_rec = cursor.execute('SELECT attempt FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (session['userid'],))
+    attempt = cursor.fetchone()
     if predict_user:
         newdata['Program']= predict_user['program']
         newdata['COMPROG 1']= predict_user['comprog1']
@@ -746,7 +784,7 @@ def result_predict():
         
        
         
-        cursor.execute('UPDATE predict SET MAIN_ROLE = % s, SECOND_ROLE = % s WHERE userID = % s', (int(m_prediction), int(s_prediction), predict_user['userID'], ))
+        cursor.execute('UPDATE predict SET MAIN_ROLE = % s, SECOND_ROLE = % s WHERE userID = % s AND attempt = % s', (int(m_prediction), int(s_prediction), predict_user['userID'], attempt['attempt']))
         mysql.connection.commit()
 
         if m_prediction == 0:
@@ -784,7 +822,8 @@ def result_predict():
 
         print('\n\nMain Role Prediction: ',m_prediction,'\n\n')
         print('\n\nSecond Role Prediction: ',s_prediction,'\n\n')
-
+    
+    
     cursor.close()
     return render_template('student/result_predict.html', m_prediction = m_prediction, s_prediction = s_prediction)
 
@@ -1008,7 +1047,12 @@ def groupings_CS_result():
 #groupings module BSCS
 @app.route('/groupings_CS', methods =['POST', 'GET'])
 def groupings_CS():
+    #SO yeah, fix here mark. since there are already attempts, you need to know how you will
+    #group the students. ASK sir jaydee's help of course.
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    attempt_rec = cursor.execute('SELECT attempt FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (userID,))
+    attempt = cursor.fetchone()
+
     sections_CS = cursor.execute("SELECT DISTINCT users.section, predict.program FROM users INNER JOIN predict ON users.id = predict.userID WHERE users.program = 'BSCS';")
     sections_CS = cursor.fetchall()
 
@@ -1036,7 +1080,7 @@ def groupings_CS():
     result4_wo = cursor.execute("SELECT predict.id, users.firstName, users.lastName, users.section, predict.program, predict.MAIN_ROLE, predict.SECOND_ROLE FROM users INNER JOIN predict ON users.id = predict.userID WHERE predict.program = '1' and users.section = '3D' and predict._group = 'none' ORDER BY predict.id DESC")
     students_BSCS3D_wo = cursor.fetchall()
 
-    result9 = cursor.execute("SELECT users.id, users.AY, users.firstName, users.lastName, users.section, users.program, predict._group, predict.MAIN_ROLE, predict.SECOND_ROLE FROM users INNER JOIN predict ON users.id = predict.userID WHERE predict.program = '1' ORDER BY predict.id DESC")
+    result9 = cursor.execute("SELECT users.id, users.AY, users.firstName, users.lastName, users.section, users.program, predict._group, predict.MAIN_ROLE, predict.SECOND_ROLE FROM users INNER JOIN predict ON users.id = predict.userID WHERE predict.program = '1' and attempt = '3' ORDER BY predict.id DESC")
     students_all = cursor.fetchall()
 
     result10 = cursor.execute("SELECT users.AY, users.firstName, users.lastName, users.section, users.program, predict._group, predict.MAIN_ROLE, predict.SECOND_ROLE FROM users INNER JOIN predict ON users.id = predict.userID WHERE predict.program = '1' and predict._group = 'none' ORDER BY predict.id DESC")

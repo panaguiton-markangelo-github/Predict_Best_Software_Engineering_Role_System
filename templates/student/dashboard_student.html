@@ -62,6 +62,14 @@
         <main>
            <div class="container">
             <h4>Welcome Student!</h4>
+                {% if preds > 0%}
+                    <h5>No. of attempts in predicting your roles: {{preds}}
+                    <h6>Note: If the number of attempts reach 3, you can no longer predict your roles again.</h6>   
+                {% endif %}
+                <br>
+                <h6>The Main and Secondary Roles displayed in these two cards/boxes are your latest prediction.</h6>
+
+            </h5>
             <div class="cards">
                 <div class="card-single">
                     <div style="color: white;">
@@ -169,20 +177,19 @@
             </div>
 
             <div class="tem-grid">
-                <div class="registered_users">
+                <div class="information_card">
                     <div class="card">
                         <div class="card-header">
-                            
-                            {% if has_record is defined and has_record %}
-                                <h3>Repredict  main and secondary roles</h3>
-                                <a href="{{ url_for('repredict') }}">Start Prediction<span class="las la-arrow-right"></span></a>
-                            {% elif session['has_record'] is defined and session['has_record'] %}
-                                <h3>Repredict  main and secondary roles</h3>
-                                <a href="{{ url_for('repredict') }}">Start Prediction<span class="las la-arrow-right"></span></a>
-                            {% else %}
-                                <h3>Predict main and secondary roles</h3>
+
+                            <h3>Predict main and secondary roles</h3>
+                            {% if preds == 3%}
+                                <a href="#">No longer available<span class="las la-arrow-right" aria-disabled="true"></span></a>
+                            {% endif %}
+
+                            {% if preds >= 0 and preds != 3%}
                                 <a href="{{ url_for('start') }}">Start Prediction<span class="las la-arrow-right"></span></a>
                             {% endif %}
+                           
                         </div>
 
                         <div class="card-body">
@@ -215,6 +222,18 @@
                             <br>
                             <h4 class="text-center">Best Software Engineering Role System(BeSER)</h4>
                             <p class="text-center">
+                                Researchers:
+                                <br>
+                                Panaguiton, Mark Angelo S.
+                                <br>
+                                Tubosa, Florence
+                                <br>
+                                Mayormita, Rica Jean
+                                <br>
+                                BS in Computer Science - 4A
+
+                            </p>
+                            <p class="text-center">
                                 Western Mindanao State University
                                 <br>
                                 College of Computing Studies
@@ -224,6 +243,7 @@
                                 All rights reverved 2022-2023.
 
                             </p>  
+
                         </div>
                     </div>
                 </div>
