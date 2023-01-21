@@ -416,7 +416,17 @@ def dashboard_student():
     
 @app.route('/dashboard_student_no_roles')
 def dashboard_student_no_roles():
-    return render_template('student/dashboard_student.html')
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    preds = cursor.execute('SELECT * FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (session['userid'], ))
+    record = cursor.fetchone()
+    
+    if preds == 0:
+        preds_a = 0
+    elif preds > 0:
+        preds_a = record['attempt']
+
+    return render_template('student/dashboard_student.html', record=record, preds=preds_a)
+
     
 
 # @app.route('/dashboard_student/start_repredict')
