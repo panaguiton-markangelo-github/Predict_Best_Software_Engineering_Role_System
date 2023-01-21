@@ -155,6 +155,33 @@
                               
                             </div>
                           </div>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <h6 class="mb-0">Secondary Role</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {% if row.SECOND_ROLE == 0%}
+                                <p class="text-secondary mb-1">Lead Programmer</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 1%}
+                                <p class="text-secondary mb-1">Project Manager</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 2%}
+                                <p class="text-secondary mb-1">UI/UX Designer</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 3%}
+                                <p class="text-secondary mb-1">QA Engineer</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 4%}
+                                <p class="text-secondary mb-1">Business Analyst</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 5%}
+                                <p class="text-secondary mb-1">NONE</p>
+                                {% endif %}
+                              
+                            </div>
+                          </div>
+                          <hr>
                         {% endif %}
 
                         {% if loop.index == 2 %}
@@ -182,6 +209,33 @@
                               
                             </div>
                           </div>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <h6 class="mb-0">Secondary Role</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {% if row.SECOND_ROLE == 0%}
+                                <p class="text-secondary mb-1">Lead Programmer</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 1%}
+                                <p class="text-secondary mb-1">Project Manager</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 2%}
+                                <p class="text-secondary mb-1">UI/UX Designer</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 3%}
+                                <p class="text-secondary mb-1">QA Engineer</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 4%}
+                                <p class="text-secondary mb-1">Business Analyst</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 5%}
+                                <p class="text-secondary mb-1">NONE</p>
+                                {% endif %}
+                              
+                            </div>
+                          </div>
+                          <hr>
                         {% endif %}
 
                         {% if loop.index == 3 %}
@@ -209,109 +263,36 @@
                               
                             </div>
                           </div>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <h6 class="mb-0">Secondary Role</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {% if row.SECOND_ROLE == 0%}
+                                <p class="text-secondary mb-1">Lead Programmer</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 1%}
+                                <p class="text-secondary mb-1">Project Manager</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 2%}
+                                <p class="text-secondary mb-1">UI/UX Designer</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 3%}
+                                <p class="text-secondary mb-1">QA Engineer</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 4%}
+                                <p class="text-secondary mb-1">Business Analyst</p>
+                                {% endif %}
+                                {% if row.SECOND_ROLE == 5%}
+                                <p class="text-secondary mb-1">NONE</p>
+                                {% endif %}
+                              
+                            </div>
+                          </div>
+                          <hr>
                         {% endif %}
 
                       {% endfor %}
-
-                      <hr>
-
-                      <div class="row">
-                        {% for row in user_roles %}
-                                              
-                        {% if loop.index == 1 %}
-                          <p>{{loop.index}}st Attempt:</p>
-                          <div class="row">
-                            <div class="col-sm-3">
-                              <h6 class="mb-0">Secondary Role</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                {% if row.SECOND_ROLE == 0%}
-                                <p class="text-secondary mb-1">Lead Programmer</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 1%}
-                                <p class="text-secondary mb-1">Project Manager</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 2%}
-                                <p class="text-secondary mb-1">UI/UX Designer</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 3%}
-                                <p class="text-secondary mb-1">QA Engineer</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 4%}
-                                <p class="text-secondary mb-1">Business Analyst</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 5%}
-                                <p class="text-secondary mb-1">NONE</p>
-                                {% endif %}
-                              
-                            </div>
-                          </div>
-                        {% endif %}
-
-                        {% if loop.index == 2 %}
-                          <p>{{loop.index}}nd Attempt:</p>
-                          <div class="row">
-                            <div class="col-sm-3">
-                              <h6 class="mb-0">Secondary Role</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                {% if row.SECOND_ROLE == 0%}
-                                <p class="text-secondary mb-1">Lead Programmer</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 1%}
-                                <p class="text-secondary mb-1">Project Manager</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 2%}
-                                <p class="text-secondary mb-1">UI/UX Designer</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 3%}
-                                <p class="text-secondary mb-1">QA Engineer</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 4%}
-                                <p class="text-secondary mb-1">Business Analyst</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 5%}
-                                <p class="text-secondary mb-1">NONE</p>
-                                {% endif %}
-                              
-                            </div>
-                          </div>
-                        {% endif %}
-
-                        {% if loop.index == 3 %}
-                          <p>{{loop.index}}rd Attempt:</p>
-                          <div class="row">
-                            <div class="col-sm-3">
-                              <h6 class="mb-0">Secondary Role</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                {% if row.SECOND_ROLE == 0%}
-                                <p class="text-secondary mb-1">Lead Programmer</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 1%}
-                                <p class="text-secondary mb-1">Project Manager</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 2%}
-                                <p class="text-secondary mb-1">UI/UX Designer</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 3%}
-                                <p class="text-secondary mb-1">QA Engineer</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 4%}
-                                <p class="text-secondary mb-1">Business Analyst</p>
-                                {% endif %}
-                                {% if row.SECOND_ROLE == 5%}
-                                <p class="text-secondary mb-1">NONE</p>
-                                {% endif %}
-                              
-                            </div>
-                          </div>
-                        {% endif %}
-
-                      {% endfor %}
-                        <hr>
-
-                      </div>
 
                     </div>
                   </div>
