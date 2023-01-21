@@ -1047,12 +1047,7 @@ def groupings_CS_result():
 #groupings module BSCS
 @app.route('/groupings_CS', methods =['POST', 'GET'])
 def groupings_CS():
-    #SO yeah, fix here mark. since there are already attempts, you need to know how you will
-    #group the students. ASK sir jaydee's help of course.
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    # attempt_rec = cursor.execute('SELECT attempt FROM predict WHERE userID = % s ORDER BY id DESC LIMIT 1', (userID,))
-    # attempt = cursor.fetchone()
-
     sections_CS = cursor.execute("SELECT DISTINCT users.section, predict.program FROM users INNER JOIN predict ON users.id = predict.userID WHERE users.program = 'BSCS';")
     sections_CS = cursor.fetchall()
 
