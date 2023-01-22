@@ -156,7 +156,8 @@
                                             <td> Section </td>
                                             <td> Program</td>
                                             <td> Main Role</td>   
-                                            <td> Secondary Role</td>                               
+                                            <td> Secondary Role</td>
+                                            <td> Attempt </td>                               
                                         </tr>
                                     </thead>
 
@@ -207,6 +208,8 @@
                                             <td> None </td>
                                             {% endif %}
 
+                                            <td> {{row_.attempt}} </td>
+
                                             
                                         </tr>
                                         {% endfor %}
@@ -236,7 +239,8 @@
                                             <td> Section </td>
                                             <td> Program</td>
                                             <td> Main Role</td>   
-                                            <td> Secondary Role</td>                                
+                                            <td> Secondary Role</td>
+                                            <td> Attempt </td>                                
                                         </tr>
                                     </thead>
 
@@ -286,6 +290,8 @@
                                             {% if row_.SECOND_ROLE == 5%}
                                             <td> None </td>
                                             {% endif %}
+
+                                            <td> {{row_.attempt}} </td>
                                         </tr>
                                         {% endfor %}
 

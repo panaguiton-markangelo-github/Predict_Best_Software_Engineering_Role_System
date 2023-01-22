@@ -840,31 +840,31 @@ def result_predict():
 @app.route('/dashboard_teacher')
 def dashboard_teacher():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    registered_studs_result = cursor.execute('SELECT * FROM users WHERE userType = "student"')
+    registered_studs_result = cursor.execute('SELECT * FROM users WHERE userType = "student" and (predict.userID, predict.created_at) IN (SELECT predict.userID, max(predict.created_at) FROM predict GROUP BY predict.userID) ORDER BY predict.id DESC;')
     registered_studs_data = cursor.fetchall()
 
-    registered_studs_result_10 = cursor.execute('SELECT * FROM users WHERE userType = "student" ORDER BY id DESC LIMIT 10')
+    registered_studs_result_10 = cursor.execute('SELECT * FROM users WHERE userType = "student" and (predict.userID, predict.created_at) IN (SELECT predict.userID, max(predict.created_at) FROM predict GROUP BY predict.userID) ORDER BY predict.id DESC LIMIT 10')
     registered_studs_data_10 = cursor.fetchall()
 
     session['no_registered_studs_result'] = registered_studs_result
     session['no_registered_studs_data_10'] = registered_studs_data_10
 
-    predicted_studs_result_IT = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 0')
+    predicted_studs_result_IT = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 0 and (predict.userID, predict.created_at) IN (SELECT predict.userID, max(predict.created_at) FROM predict GROUP BY predict.userID) ORDER BY predict.id DESC;')
     predicted_studs_data_IT = cursor.fetchall()
     session['no_predicted_studs_result_IT'] = predicted_studs_result_IT
     session['no_predicted_studs_data_IT'] = predicted_studs_data_IT
 
-    predicted_studs_result_CS = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID  WHERE predict.program = 1')
+    predicted_studs_result_CS = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID  WHERE predict.program = 1 and (predict.userID, predict.created_at) IN (SELECT predict.userID, max(predict.created_at) FROM predict GROUP BY predict.userID) ORDER BY predict.id DESC;')
     predicted_studs_data_CS = cursor.fetchall()
     session['no_predicted_studs_result_CS'] = predicted_studs_result_CS
     session['no_predicted_studs_data_CS'] = predicted_studs_data_CS
 
-    predicted_studs_result_10_IT = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 0 ORDER BY predict.id DESC LIMIT 10')
+    predicted_studs_result_10_IT = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program, predict.attempt FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 0 and (predict.userID, predict.created_at) IN (SELECT predict.userID, max(predict.created_at) FROM predict GROUP BY predict.userID) ORDER BY predict.id DESC LIMIT 10')
     predicted_studs_data_10_IT = cursor.fetchall()
     session['no_predicted_studs_result_10_IT'] = predicted_studs_result_10_IT
     session['no_predicted_studs_data_10_IT'] = predicted_studs_data_10_IT
 
-    predicted_studs_result_10_CS = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 1 ORDER BY predict.id DESC LIMIT 10')
+    predicted_studs_result_10_CS = cursor.execute('SELECT predict.*, users.AY, users.firstName, users.lastName, users.section, users.program, predict.attempt FROM predict INNER JOIN users ON users.id = predict.userID WHERE predict.program = 1 and (predict.userID, predict.created_at) IN (SELECT predict.userID, max(predict.created_at) FROM predict GROUP BY predict.userID) ORDER BY predict.id DESC LIMIT 10')
     predicted_studs_data_10_CS = cursor.fetchall()
     session['no_predicted_studs_result_10_CS'] = predicted_studs_result_10_CS
     session['no_predicted_studs_data_10_CS'] = predicted_studs_data_10_CS
