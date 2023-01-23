@@ -139,27 +139,30 @@
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <script>
-      const input1 = document.getElementById('program');
-      const input2 = document.getElementById('section');
-      $('#userType').change(function(){
-        if($(this).val()==="teacher"){
-          $('#boxSec').hide();
-          $('#boxProg').hide();
-          input1.removeAttribute('required');
-          input2.removeAttribute('required');
-        }
-        else if($(this).val()==="none"){
-          $('#boxSec').hide();
-          $('#boxProg').hide();
-        }
-        else{
-          $('#boxSec').show();
-          $('#boxProg').show();
-          input1.setAttribute('required', '');
-          input2.setAttribute('required', '');
-        }
-  
-      }).change();
+      $(document).ready(function() {
+        const input1 = document.getElementById('program');
+        const input2 = document.getElementById('section');
+        $('#userType').change(function(){
+          if($(this).val()==="teacher"){
+            $('#boxSec').hide();
+            $('#boxProg').hide();
+            input1.removeAttribute('required');
+            input2.removeAttribute('required');
+          }
+          else if($(this).val()==="none"){
+            $('#boxSec').hide();
+            $('#boxProg').hide();
+          }
+          else{
+            $('#boxSec').show();
+            $('#boxProg').show();
+            input1.setAttribute('required', '');
+            input2.setAttribute('required', '');
+          }
+    
+        }).change();
+      });
+      
     </script>
 
     <script>
