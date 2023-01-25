@@ -47,6 +47,15 @@
                           <a href="{{ url_for('start') }} " class="btn btn-success">Predict</a>
                           {% endif %}
 
+                          <hr>
+                         
+                          {% if user_roles._group == "none" %}
+                            <p class="text-secondary mb-1">Group: None</p>
+                          {% else %}
+                            <p class="text-secondary mb-1">Group: {{user_roles.0._group}}</p>
+                          {% endif %}
+
+
                         </div>
                       </div>
                     </div>

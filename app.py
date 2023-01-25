@@ -1125,8 +1125,6 @@ def groupings_CS():
                     student_UI_UX_a = cursor.fetchall()
 
                 
-
-
                     result1_s_a = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.id FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.SECOND_ROLE = '0' and predict._group = 'none' and (predict.userID, predict.created_at) IN (SELECT predict.userID, max(predict.created_at) FROM predict GROUP BY predict.userID)")
                     student_LP_s_a = cursor.fetchall()
                     
@@ -1142,23 +1140,23 @@ def groupings_CS():
                     if result1_a >= no_of_groups and result2_a >= no_of_groups and result3_a >= no_of_groups:
                         while no_of_groups > 0:
                             group_iterator = group_iterator + 1
-                            result0 = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.id FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
+                            result0 = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.userID FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
                             student_gen = cursor.fetchone()
                             
-                            result1 = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.id FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.MAIN_ROLE = '0' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
+                            result1 = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.userID FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.MAIN_ROLE = '0' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
                             student_LP = cursor.fetchone()
                             
-                            result2 = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.id FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.MAIN_ROLE = '1' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
+                            result2 = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.userID FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.MAIN_ROLE = '1' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
                             student_PM = cursor.fetchone() 
 
-                            result3 = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.id FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.MAIN_ROLE = '2' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
+                            result3 = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.userID FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.MAIN_ROLE = '2' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
                             student_UI_UX = cursor.fetchone()
 
                                                  
                             #Lead programmer
                             if student_LP:
-                                student_LP_id = student_LP['id']
-                                cursor.execute('UPDATE predict SET _group = % s WHERE id = % s', (int(group_iterator), int(student_LP_id)))        
+                                student_LP_id = student_LP['userID']
+                                cursor.execute('UPDATE predict SET _group = % s WHERE userID = % s', (int(group_iterator), int(student_LP_id)))        
                                 mysql.connection.commit()
                         
                             else:
@@ -1166,8 +1164,8 @@ def groupings_CS():
                             
                             #Project Manager 
                             if student_PM:
-                                student_PM_id = student_PM['id']
-                                cursor.execute('UPDATE predict SET _group = % s WHERE id = % s', (int(group_iterator), int(student_PM_id)))        
+                                student_PM_id = student_PM['userID']
+                                cursor.execute('UPDATE predict SET _group = % s WHERE userID = % s', (int(group_iterator), int(student_PM_id)))        
                                 mysql.connection.commit()
             
                             else:
@@ -1175,37 +1173,37 @@ def groupings_CS():
                             
                             #UI/UX Designer
                             if student_UI_UX:
-                                student_UI_UX_id = student_UI_UX['id']
-                                cursor.execute('UPDATE predict SET _group = % s WHERE id = % s', (int(group_iterator), int(student_UI_UX_id)))        
+                                student_UI_UX_id = student_UI_UX['userID']
+                                cursor.execute('UPDATE predict SET _group = % s WHERE userID = % s', (int(group_iterator), int(student_UI_UX_id)))        
                                 mysql.connection.commit()
                             
                             else:
                                 mes='unexpected error occured!'
                             
-                           
                                                 
                             no_of_groups = no_of_groups - 1
+                            
                     elif result1_s_a >= no_of_groups and result2_s_a >= no_of_groups and result3_s_a >= no_of_groups:
                         while no_of_groups > 0:
                             group_iterator = group_iterator + 1
-                            result0 = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.id FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
+                            result0 = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.userID FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
                             student_gen = cursor.fetchone()
                     
-                            result1_s = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.id FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.SECOND_ROLE = '0' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
+                            result1_s = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.userID FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.SECOND_ROLE = '0' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
                             student_LP_s = cursor.fetchone()
                             
-                            result2_s = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.id FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.SECOND_ROLE = '1' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
+                            result2_s = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.userID FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.SECOND_ROLE = '1' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
                             student_PM_s = cursor.fetchone()
                             
-                            result3_s = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.id FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.SECOND_ROLE = '2' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
+                            result3_s = cursor.execute("SELECT users.firstName, users.lastName, users.section, predict.userID FROM predict INNER JOIN users on users.id = predict.userID WHERE predict.program = '1' and users.section = '3A' and predict.SECOND_ROLE = '2' and predict._group = 'none' ORDER BY predict.id DESC LIMIT 1")
                             student_UI_UX_s = cursor.fetchone()
 
                                          
                             
                             #Lead programmer
                             if student_LP_s:
-                                student_LP_id_s = student_LP_s['id']
-                                cursor.execute('UPDATE predict SET _group = % s WHERE id = % s', (int(group_iterator), int(student_LP_id_s)))        
+                                student_LP_id_s = student_LP_s['userID']
+                                cursor.execute('UPDATE predict SET _group = % s WHERE userID = % s', (int(group_iterator), int(student_LP_id_s)))        
                                 mysql.connection.commit()
                         
                             else:
@@ -1213,8 +1211,8 @@ def groupings_CS():
                             
                             #Project Manager 
                             if student_PM_s:
-                                student_PM_id_s = student_PM_s['id']
-                                cursor.execute('UPDATE predict SET _group = % s WHERE id = % s', (int(group_iterator), int(student_PM_id_s)))        
+                                student_PM_id_s = student_PM_s['userID']
+                                cursor.execute('UPDATE predict SET _group = % s WHERE userID = % s', (int(group_iterator), int(student_PM_id_s)))        
                                 mysql.connection.commit()
                             
                             else:
@@ -1222,8 +1220,8 @@ def groupings_CS():
                             
                             #UI/UX Designer
                             if student_UI_UX_s:
-                                student_UI_UX_id_s = student_UI_UX_s['id']
-                                cursor.execute('UPDATE predict SET _group = % s WHERE id = % s', (int(group_iterator), int(student_UI_UX_id_s)))        
+                                student_UI_UX_id_s = student_UI_UX_s['userID']
+                                cursor.execute('UPDATE predict SET _group = % s WHERE userID = % s', (int(group_iterator), int(student_UI_UX_id_s)))        
                                 mysql.connection.commit()
                             else:
                                 mes='unexpected error occured!'
