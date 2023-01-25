@@ -330,8 +330,8 @@ def edit_profile():
     session['program'] = user['program']
     session['section'] = user['section']
 
-    is_predict = cursor.execute('SELECT * FROM predict WHERE predict.userID = % s', (session['userid'], ))
-    user_roles = cursor.fetchone()
+    is_predict = cursor.execute('SELECT * FROM predict WHERE predict.userID = % s ORDER BY id ASC', (session['userid'], ))
+    user_roles = cursor.fetchall()
     
     if request.method == 'POST'  and 'firstName' in request.form and 'lastName' in request.form and 'email' in request.form and 'program' in request.form and 'section' in request.form: 
         firstName = request.form['firstName']
