@@ -53,13 +53,17 @@
                             Note: If a student already reached 3 times in predicting his/her roles, the student can no longer attempt to predict his/her roles.                          
                           </p>
                           {% endif %}
+                      
 
-                          
-                          {% if user_roles._group == 'none' %}
-                            <p class="text-secondary mb-1">Group: None</p>
+                          {% if user_roles %}
+                            {% if user_roles._group == 'none' %}
+                              <p class="text-secondary mb-1">Group: None</p>
+                            {% else %}
+                              <p class="text-secondary mb-1">Group: {{user_roles.0._group}}</p>
+                            {% endif %}
                           {% else %}
-                            <p class="text-secondary mb-1">Group: {{user_roles.0._group}}</p>
-                          {% endif %}
+                            <p class="text-secondary mb-1">Group: None</p>
+                          {% endif %} 
                         
                         </div>
                       </div>

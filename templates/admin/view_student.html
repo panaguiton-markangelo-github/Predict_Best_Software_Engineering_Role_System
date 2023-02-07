@@ -51,12 +51,16 @@
                           </p>
                           {% endif %}
 
-                          
-                        {% if user_roles._group == 'none' %}
-                          <p class="text-secondary mb-1">Group: None</p>
-                        {% else %}
-                          <p class="text-secondary mb-1">Group: {{user_roles.0._group}}</p>
-                        {% endif %}
+                          {% if user_roles %}
+                            {% if user_roles._group == "none" %}
+                            <p class="text-secondary mb-1">Group: None</p>
+                            {% else %}
+                              <p class="text-secondary mb-1">Group: {{user_roles.0._group}}</p>
+                            {% endif %}
+                          {% else %}
+                            <p class="text-secondary mb-1">Group: None</p>
+                          {% endif %} 
+
                         
                         </div>
                       </div>
