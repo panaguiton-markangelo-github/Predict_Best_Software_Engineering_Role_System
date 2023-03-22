@@ -1,3 +1,5 @@
+#Importing the python pages, that are needed for the software.
+
 from flask import Flask, flash, render_template, url_for, request, redirect, session, jsonify
 from flask_session import Session
 from passlib.hash import sha256_crypt
