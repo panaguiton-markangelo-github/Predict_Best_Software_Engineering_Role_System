@@ -106,7 +106,7 @@
                                     {% if row.status == "deactivated" %}
                                     <form action="{{ url_for ('activate') }}" method="POST">
                                         <input type="text" name="userID" value="{{row.id}}" hidden>
-                                        <button type="submit" name="submit" class="btn btn-success"><i class="las la-check"></i> activate </button>
+                                        <button type="submit" name="submit" class="btn btn-success"><i class="las la-check"></i> active </button>
                                     </form>
                                     {% endif %}
 
@@ -114,7 +114,7 @@
                                     <form action="{{ url_for ('deactivate') }}" method="POST">
                                         
                                         <input type="text" name="userID" value="{{row.id}}" hidden>
-                                        <button type="submit" name="submit" class="btn btn-danger"><i class="las la-times"></i> deactivate </button>
+                                        <button type="submit" name="submit" class="btn btn-danger"><i class="las la-times"></i> inactive </button>
                                     </form>
                                     {% endif %}
 
