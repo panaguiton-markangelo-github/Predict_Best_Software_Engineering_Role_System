@@ -266,7 +266,7 @@ def view_student():
 
     return render_template('teacher/view_student.html', student_records_page=student_records_page, user_roles=user_roles, is_predict=is_predict)
 
-#This function will render the student's profile from a student user.
+#This function will render the student's profile from a teacher user.
 @app.route('/groupings_CS/student_profile', methods=['GET', 'POST'])
 def view_student_CS():
     if request.method == 'POST' and 'g_cs' in request.form and 'userID' in request.form:
@@ -294,6 +294,7 @@ def view_student_CS():
     
     return render_template('teacher/view_student.html', groupings_cs_page=groupings_cs_page, user_roles=user_roles, is_predict=is_predict)
 
+#This function will render the student's profile from a teacher user.
 @app.route('/groupings_IT/student_profile', methods=['GET', 'POST'])
 def view_student_IT():
     if request.method == 'POST'  and 'g_it' in request.form and 'userID' in request.form:
@@ -321,6 +322,7 @@ def view_student_IT():
 
     return render_template('teacher/view_student.html', groupings_it_page=groupings_it_page, user_roles=user_roles, is_predict=is_predict)
 
+#This function will render the student's edit profile page and user can edit the information.
 @app.route('/dashboard_student/edit_profile', methods =['POST', 'GET'])
 def edit_profile():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -357,6 +359,7 @@ def edit_profile():
     cursor.close()
     return render_template('student/edit_profile.html', user_roles=user_roles, is_predict=is_predict)
 
+#This function will render the dashboard page of the student user.
 @app.route('/dashboard_student')
 def dashboard_student():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -419,7 +422,8 @@ def dashboard_student():
         session['has_record'] = False
         cursor.close()
         return render_template('student/dashboard_student.html', has_record=has_record, record=record, preds=preds_a)
-    
+
+#This function will fix an error when redirecting to the dashboard of a student without roles.
 @app.route('/dashboard_student_no_roles')
 def dashboard_student_no_roles():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -433,21 +437,8 @@ def dashboard_student_no_roles():
 
     return render_template('student/dashboard_student.html', record=record, preds=preds_a)
 
-    
-
-# @app.route('/dashboard_student/start_repredict')
-# def repredict():
-#     session['repredict'] = True
-#     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     cursor.execute('SELECT predict.id, users.firstName, users.lastName FROM users INNER JOIN predict ON users.id = predict.userID WHERE predict.userID = % s', (session['userid'],))
-#     del_user = cursor.fetchone()
-
-#     cursor.execute('DELETE FROM predict WHERE id = % s', (del_user['id'], ))
-#     mysql.connection.commit()
-
-#     cursor.close()
-#     return redirect(url_for('start'))
-
+#This function will render the first page of the prediction feature and this function will process the inputted
+#data to compute the GPA and then display it.
 @app.route('/dashboard_student/start', methods =['POST', 'GET'])
 def start():
     GPA = 0
@@ -527,6 +518,8 @@ def start():
 
     return render_template('student/start.html', mesage=mesage)
 
+#This will render the 2nd page of the prediction feature and this function will display the 
+#result which is GPA of a student.
 @app.route('/dashboard_student/gpa')
 def result_gpa():
     userID = session['userid']
@@ -549,6 +542,9 @@ def result_gpa():
     return render_template('student/result_gpa.html')
 
 
+#This will render the 3rd page of the prediction feature and this function will display the 
+#page where the student can input his/her personality type. The function will also store 
+#the inputted PT of a student into a database.
 @app.route('/dashboard_student/pt', methods =['POST', 'GET'])
 def pt():
     mesage = ''
@@ -678,6 +674,9 @@ def pt():
     return render_template('student/pt.html', mesage = mesage)
 
 
+#This will render the 4th page of the prediction feature and this function will display the 
+#page where the student can input his/her multiple intelligences type. The function will also store 
+#the inputted MT of a student into a database.
 @app.route('/dashboard_student/mt', methods =['POST', 'GET'])
 def mt():
     mesage = ''
@@ -723,17 +722,18 @@ def mt():
     return render_template('student/mt.html', mesage=mesage)
 
 
-#about page
+
+#render the about page
 @app.route('/dashboard_student/about')
 def about_page():
     return render_template('student/about.html')
 
-#predict page
+#render the predict page
 @app.route('/dashboard_student/predict')
 def predict():
     return render_template('student/predict.html')
 
-#result page
+#render the result page of the prediction. This will also store the data into a database.
 @app.route('/dashboard_student/result_predict', methods =['POST', 'GET'])
 def result_predict():
     newdata=dict()
@@ -843,6 +843,7 @@ def result_predict():
     cursor.close()
     return render_template('student/result_predict.html', m_prediction = m_prediction, s_prediction = s_prediction)
 
+#This will render the dashboard page of the teacher. 
 @app.route('/dashboard_teacher')
 def dashboard_teacher():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -878,8 +879,7 @@ def dashboard_teacher():
     cursor.close()
     return render_template('teacher/dashboard_teacher.html')
 
-#admin
-
+#admin side, render the student profile page.
 @app.route('/students_records/student_profile', methods=['GET', 'POST'])
 def a_view_student():
     if request.method == 'POST'  and 's_record' in request.form and 'userID' in request.form:
@@ -906,6 +906,7 @@ def a_view_student():
 
     return render_template('admin/view_student.html', student_records_page=student_records_page, user_roles=user_roles, is_predict=is_predict)
 
+#admin side, render the teacher profile page.
 @app.route('/teachers_records/teacher_profile', methods=['GET', 'POST'])
 def a_view_teacher():
     if request.method == 'POST'  and 't_record' in request.form and 'userID' in request.form:
@@ -928,6 +929,7 @@ def a_view_teacher():
 
     return render_template('admin/view_teacher.html', teacher_records_page=teacher_records_page)
 
+#admin side, render the dashboard of the admin.
 @app.route('/dashboard_admin')
 def dashboard_admin():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -952,6 +954,7 @@ def dashboard_admin():
     cursor.close()
     return render_template('admin/dashboard_admin.html')
 
+#This will allow admin to activate an inactive account of a teacher.
 @app.route('/dashboard_admin/teacher/activate', methods=['GET', 'POST'])
 def activate():
     userID = request.form['userID']
@@ -965,6 +968,7 @@ def activate():
     # return render_template('admin/teachers_records.html', mes_s=mes_s)
     return redirect(url_for('teachers_records'))
 
+#This will allow admin to deactivate an inactive account of a teacher.
 @app.route('/dashboard_admin/teacher/deactivate', methods=['GET', 'POST'])
 def deactivate():
     userID = request.form['userID']
@@ -978,6 +982,8 @@ def deactivate():
     # return render_template('admin/teachers_records.html', mes_s=mes_s)
     return redirect(url_for('teachers_records'))
 
+#This function here, are the algorithms that the researchers developed. This function will allow a
+#teacher to group their CS students on their SE course.
 @app.route('/groupings_CS/group_result')
 def groupings_CS_result():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -1060,7 +1066,8 @@ def groupings_CS_result():
             return render_template('teacher/groupings_CS.html', result1_wo=result1_wo, result2_wo=result2_wo, result3_wo=result3_wo, mes_s=mes_s, students_all = students_all, students_BSCS3A = len(students_BSCS3A), students_BSCS3B = len(students_BSCS3B), students_BSCS3C = len(students_BSCS3C), students_BSCS3D = len(students_BSCS3D), sections_CS=sections_CS)
 
 
-#groupings module BSCS
+#This function here, are the algorithms that the researchers developed. This function will allow a
+#teacher to group their CS students on their SE course.
 @app.route('/groupings_CS', methods =['POST', 'GET'])
 def groupings_CS():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -4989,7 +4996,8 @@ def groupings_CS():
     cursor.close()
     return render_template('teacher/groupings_CS.html', result1_wo=result1_wo, result2_wo=result2_wo, result3_wo=result3_wo,students_all = students_all, students_BSCS3A = len(students_BSCS3A), students_BSCS3B = len(students_BSCS3B), students_BSCS3C = len(students_BSCS3C), students_BSCS3D = len(students_BSCS3D), sections_CS=sections_CS)
 
-
+#teacher awards to group their IT students on their SE course.
+#groupings module BSIT
 @app.route('/groupings_IT/group_result')
 def groupings_IT_result():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -5072,7 +5080,8 @@ def groupings_IT_result():
             return render_template('teacher/groupings_IT.html', result1_wo=result1_wo, result2_wo=result2_wo, mes_s=mes_s, students_all = students_all, students_BSIT3A = len(students_BSIT3A), students_BSIT3B = len(students_BSIT3B), students_BSIT3C = len(students_BSIT3C), students_BSIT3D = len(students_BSIT3D), sections_IT=sections_IT)
 
 
-#groupings module BSIT
+#teacher awards to group their IT students on their SE course.
+#groupings module BSIT. 
 @app.route('/groupings_IT', methods =['POST', 'GET'])
 def groupings_IT():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -9030,6 +9039,8 @@ def groupings_IT():
     cursor.close()
     return render_template('teacher/groupings_IT.html', result1_wo=result1_wo, result2_wo=result2_wo, result3_wo=result3_wo, students_all = students_all, students_BSIT3A = len(students_BSIT3A), students_BSIT3B = len(students_BSIT3B), students_BSIT3C = len(students_BSIT3C), students_BSIT3D = len(students_BSIT3D), sections_IT= sections_IT)
 
+
+#This will render the student records page from the UI/UX design
 @app.route('/student_records')
 def student_records():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
