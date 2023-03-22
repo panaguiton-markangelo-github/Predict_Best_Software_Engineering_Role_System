@@ -1,4 +1,4 @@
-#Importing the python pages, that are needed for the software.
+#Importing the python pages, that are needed for the software..
 
 from flask import Flask, flash, render_template, url_for, request, redirect, session, jsonify
 from flask_session import Session
@@ -985,7 +985,7 @@ def deactivate():
     return redirect(url_for('teachers_records'))
 
 #This function here, are the algorithms that the researchers developed. This function will allow a
-#teacher to group their CS students on their SE course.
+#teacher to group their CS students on their SE course which can be accessible by teacher.
 @app.route('/groupings_CS/group_result')
 def groupings_CS_result():
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
