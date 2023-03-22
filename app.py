@@ -30,12 +30,15 @@ app.config['MYSQL_DB'] = 'thesis_db'
 mysql = MySQL(app)
 
 
+#This function will open the landing page upon visiting the link.
 @app.route('/')   
 def landing_page():
     if not session.get('loggedin'):
         return render_template('index.html')
     return render_template('index.html')
 
+#This function will allow the user to login if the account credentials are correct, otherwise 
+#output an error message. It will laso redirect to the dashboard page.
 @app.route('/Login')
 @app.route('/Home', methods =['POST', 'GET'])
 def login():
@@ -212,7 +215,7 @@ def login():
 
     return render_template('index.html', mesage = mesage)
 
-
+#This function will render the student's profile from a student user.
 @app.route('/dashboard_student/profile')
 def view_profile():
     user_id = session['userid']
@@ -235,6 +238,8 @@ def view_profile():
     cursor.close()
     return render_template('student/view_profile.html', user_roles=user_roles, is_predict=is_predict)
 
+
+#This function will render the student's profile from a teacher user.
 @app.route('/student_records/student_profile', methods=['GET', 'POST'])
 def view_student():
     if request.method == 'POST'  and 's_record' in request.form and 'userID' in request.form:
@@ -261,6 +266,7 @@ def view_student():
 
     return render_template('teacher/view_student.html', student_records_page=student_records_page, user_roles=user_roles, is_predict=is_predict)
 
+#This function will render the student's profile from a student user.
 @app.route('/groupings_CS/student_profile', methods=['GET', 'POST'])
 def view_student_CS():
     if request.method == 'POST' and 'g_cs' in request.form and 'userID' in request.form:
