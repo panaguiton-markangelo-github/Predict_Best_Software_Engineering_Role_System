@@ -9150,6 +9150,8 @@ def register():
 
 mode = "dev"
 
+
+#Thisf unction here will students to respawn heirt activity
 if __name__ == "__main__":
     if mode == "dev":
         app.run(host="0.0.0.0", port=8080)
